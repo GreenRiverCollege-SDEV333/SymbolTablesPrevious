@@ -7,19 +7,81 @@ package edu.greenriver.sdev333;
  * @param <ValueType>
  */
 public class BST<KeyType extends Comparable<KeyType>, ValueType> implements OrderedSymbolTable<KeyType, ValueType> {
+    //fields
+    private Node root;
+    //helper class
+    private class Node{
+        private KeyType key;
+        private ValueType value;
+        private Node left;
+        private Node right;
+        //number of nodes in the subtree rooted here
+        private int N;
+
+        public Node(KeyType key, ValueType value, int N){
+            this.key = key;
+            this.value = value;
+            this.N = N;
+        }
+    }
     @Override
     public void put(KeyType key, ValueType value) {
 
     }
+ //get helper method
+    private ValueType get(Node current, KeyType key){
+        if (current == null){
+            return null;
+        }
+        int cmp = key.compareTo(current.key);
+
+        if(cmp < 0){
+            return get(current.left, key);
+        }
+        else if (cmp > 0) {
+            return get(current.right, key);
+        }
+        else{
+            return current.value;
+        }
+    }
 
     @Override
     public ValueType get(KeyType key) {
-        return null;
+       return get(root, key);
+
+        //while loop version below
+// key passed in, find the value that belongs to it
+//        Node current = root;
+//        while (current != null){
+//            //compareTo returns neg, zero, pos
+//            int cmp = key.compareTo(current.key);
+//            if(cmp < 0){
+//                current = current.left;
+//            }
+//            else if (cmp > 0) {
+//                current = current.right;
+//            }
+//            else {
+//                return current.value;
+//
+//            }
+//        }//end of while
+//        return null;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size(root);
+    }
+
+    private int size(Node current){
+        if(current == null){
+            return 0;
+        }
+        else{
+            return current.N;
+        }
     }
 
     @Override
