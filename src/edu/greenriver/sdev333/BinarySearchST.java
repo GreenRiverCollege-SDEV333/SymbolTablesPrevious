@@ -7,19 +7,35 @@ package edu.greenriver.sdev333;
  * @param <ValueType>
  */
 public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> implements OrderedSymbolTable<KeyType, ValueType> {
+    private KeyType[] keys;
+    private ValueType[] vals;
+    private int n;
+    public BinarySearchST(int capacity){
+        keys = (KeyType[]) new Comparable[capacity];
+        vals = (ValueType[]) new Object[capacity];
+    }
     @Override
     public void put(KeyType key, ValueType value) {
 
     }
 
+
     @Override
     public ValueType get(KeyType key) {
-        return null;
+        if(isEmpty()){
+            return null;
+        }
+        int i = rank(key);
+        if(i < n && keys[i].compareTo(key) == 0){
+            return vals[i];
+        } else {
+            return null;
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        return n;
     }
 
     @Override

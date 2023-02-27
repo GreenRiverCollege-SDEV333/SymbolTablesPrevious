@@ -56,6 +56,11 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     }
 
     @Override
+    public boolean contains(KeyType key) {
+        return get(key) != null;
+    }
+
+    @Override
     public ValueType get(KeyType key) {
         // someone gives me a key, I want to find the value that goes with that key
         //loop style
@@ -192,7 +197,7 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return rank(key,root);
     }
 
-    @Override
+
     public int rank(KeyType key, Node current) {
         //return number of keys less than key in the subtree rooted at x
         if(current == null){
@@ -204,7 +209,7 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         } else if (cmp < 0) {
             return 1 + size(current.left) + rank(key, current.right);
         } else {
-            return size(x.left);
+            return size(current.left);
         }
     }
 
@@ -221,9 +226,9 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         }
         int t = size(current.left);
         if (t > k){
-            return select(x.left, k);
+            return select(current.left, k);
         } else if (t < k){
-            return select(x.right, k-t-1);
+            return select(current.right, k-t-1);
         } else {
             return current;
         }

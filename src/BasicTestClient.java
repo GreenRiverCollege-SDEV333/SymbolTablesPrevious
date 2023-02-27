@@ -16,7 +16,7 @@ public class BasicTestClient {
         String inputString = "S E A R C H E X A M P L E";
 
         Scanner input = new Scanner(inputString);
-        SymbolTable<String, Integer> st = new SeparateChainingHashST<String, Integer>();
+        SymbolTable<String, Integer> st = new BST<String, Integer>();
         // You can replace the implementation with any class that implements
         // SymbolTable interface
 
