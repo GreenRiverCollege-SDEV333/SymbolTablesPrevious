@@ -1,8 +1,11 @@
+import edu.greenriver.sdev333.BinarySearchST;
+import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.File;
+
 
 /**
  * Frequency Table is a symbol-table client
@@ -13,11 +16,11 @@ import java.io.File;
  */
 public class FrequencyCounter {
     public static final int MINLEN = 1;
-    public static final String FILENAME = "tale.txt";
+    public static final String FILENAME = "tinyTale.txt";
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new BinarySearchST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
