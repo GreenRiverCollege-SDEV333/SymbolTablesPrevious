@@ -19,7 +19,7 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         //System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new BinarySearchST<>();
+        SymbolTable<String, Integer> st = new BST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));

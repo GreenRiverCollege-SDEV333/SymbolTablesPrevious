@@ -1,57 +1,78 @@
 package edu.greenriver.sdev333;
 
-import org.w3c.dom.Node;
-
 import java.util.Iterator;
 
-/**Page 151
- *
- * @param <ItemType>
+/**
+ * FIFO queue, page 151 of the red book
  */
-public class Queue<ItemType> implements Iterable<ItemType>{
+public class Queue<ItemType> implements Iterable<ItemType> {
+    // private helper node class:
+    private class Node {
+        private ItemType data;
+        private Node next;
+    }
 
+    // fields:
     private Node first;
     private Node last;
     private int size;
-    private class Node{
-        ItemType data;
-        Node next;
+
+    public Queue() {
+        first = null;
+        last = null;
+        size = 0;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return first == null;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
-    public void enqueue(ItemType item){
+    public void enqueue(ItemType item) {
         Node oldlast = last;
         last = new Node();
         last.data = item;
         last.next = null;
 
-        if(isEmpty()){
-            last = null;
-        }else{
+        if (isEmpty()) {
+            first = last;
+        }
+        else {
             oldlast.next = last;
         }
+
+        size++;
     }
 
-    public ItemType dequeue(){
+    public ItemType dequeue() {
         ItemType item = first.data;
         first = first.next;
         size--;
-        if(isEmpty()){
+        if (isEmpty()) {
             last = null;
         }
         return item;
     }
 
-    private class ListIterator implements Iterator<ItemType>{
-        private Queue.Node current;
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @Override
+    public Iterator<ItemType> iterator() {
+        return new LinkedListIterator();
+    }
 
+    private class LinkedListIterator implements Iterator<ItemType> {
+        private Node current;
+
+        public LinkedListIterator() {
+            current = first;
+        }
 
         @Override
         public boolean hasNext() {
@@ -60,17 +81,9 @@ public class Queue<ItemType> implements Iterable<ItemType>{
 
         @Override
         public ItemType next() {
-            return null;
+            ItemType item = current.data;
+            current = current.next;
+            return item;
         }
-
-        @Override
-        public void remove() {
-            Iterator.super.remove();
-        }
-    }
-
-    @Override
-    public Iterator<ItemType> iterator() {
-        return new ListIterator();
     }
 }
