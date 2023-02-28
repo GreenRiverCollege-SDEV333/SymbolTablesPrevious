@@ -29,7 +29,42 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public void put(KeyType key, ValueType value) {
+        // starts the recursion
+        root = put(root, key, value);
+    }
 
+    // helper method for put using recursion
+    private Node put(Node current, KeyType key, ValueType val){
+        // current is the root of the subtree we are looking at
+
+        // we at where we are supposed to be
+        if(current == null) {
+            // create a new node
+            return new Node(key, val, 1);
+        }
+
+        int cmp = key.compareTo(current.key);
+        // cmp will be -1 if key < currrent.key
+        // cmp will be 0 if key == current.key
+        // cmp will be 1 if key > currrent.key
+
+        // go left
+        if(cmp < 0) {
+           current.left = put(current.left, key, val);
+        }
+        // go right
+        else if(cmp > 0) {
+            current.right = put(current.right, key, val);
+        }
+        else {
+            // key already exists
+            current.value = val;
+        }
+
+        // update the node's N - number of nodes in the subtree
+        // size of my left + size of my right + myself
+        current.N = size(current.left) + size(current.right) + 1;
+        return current;
     }
 
     @Override
@@ -56,6 +91,7 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 //    }
 
     public ValueType get(KeyType key) {
+
         return get(root, key);
     }
 
@@ -129,6 +165,25 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        // create a new empty queue to hold my results
+        Queue<KeyType> queue = new Queue<>();
+
+        // start the recursion, collecting results in the queue
+        inorder(root, queue);
+
+        // when done, return the queue
+        return queue;
+    }
+
+    private void inorder(Node current, Queue<KeyType> q){
+        if(current == null) {
+            // do nothing - end the method
+            return;
+        }
+
+        inorder(current.left, q);
+        q.enqueue(current.key);
+        inorder(current.right, q);
+
     }
 }

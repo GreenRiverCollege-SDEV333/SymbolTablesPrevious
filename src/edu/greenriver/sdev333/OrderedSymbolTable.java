@@ -14,7 +14,8 @@ public interface OrderedSymbolTable <KeyType extends Comparable<KeyType>, ValueT
         put(key, null);
     }
     default boolean contains(KeyType key) {
-        return get(key) == null;
+
+        return get(key) != null;
     }
     default boolean isEmpty() {
         return size() == 0;
