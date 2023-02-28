@@ -1,3 +1,5 @@
+import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.BinarySearchST;
 import edu.greenriver.sdev333.SymbolTable;
 
 import java.io.FileNotFoundException;
@@ -15,9 +17,9 @@ public class FrequencyCounter {
     public static final int MINLEN = 1;
     public static final String FILENAME = "tale.txt";
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        //System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new BinarySearchST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
@@ -32,9 +34,10 @@ public class FrequencyCounter {
                 if (!st.contains(word)) {
                     // if the word is not in the symbol table
                     // put it in with a value of 1
+                    //System.out.println("New Word: "+word);
                     st.put(word, 1);
-                }
-                else {
+                } else {
+                    //System.out.println("Existing Word: "+word);
                     int count = st.get(word);   // get existing word count
                     count++;                    // increment/update the count
                     st.put(word, count);        // put updated word count
@@ -48,7 +51,9 @@ public class FrequencyCounter {
         String maxWord = "";
         int maxCount = 0;
 
+        //System.out.println("doing this now...");
         for (String currentWord : st.keys()) {
+            //System.out.println(currentWord);
             int currentCount = st.get(currentWord);
             if (currentCount > maxCount) {
                 maxWord = currentWord;
@@ -56,6 +61,6 @@ public class FrequencyCounter {
             }
         }
 
-        System.out.println(maxWord + " " + maxCount);
+        System.out.println("Most frequent word: "+maxWord + "  Count: " + maxCount);
     }
 }
