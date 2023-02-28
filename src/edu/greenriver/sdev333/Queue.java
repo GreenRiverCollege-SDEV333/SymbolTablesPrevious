@@ -1,102 +1,84 @@
 package edu.greenriver.sdev333;
 
-
 import java.util.Iterator;
-import java.util.List;
 
 /**
- * FIFO queue, page 151 and 152 of the red book
+ * FIFO queue, page 151 of the red book
  */
-public class Queue<ItemType> implements Iterable<ItemType>
-{
-
-    private class Node{
-        ItemType data;
-        Node next;
+public class Queue<ItemType> implements Iterable<ItemType> {
+    // private helper node class:
+    private class Node {
+        private ItemType data;
+        private Node next;
     }
 
-    //fields:
+    // fields:
     private Node first;
     private Node last;
     private int size;
-    public boolean isEmpty()
-    {
+
+    public Queue() {
+        first = null;
+        last = null;
+        size = 0;
+    }
+
+    public boolean isEmpty() {
         return first == null;
     }
 
-    public int size()
-    {
+    public int size() {
         return size;
     }
 
-    public void enqueue(ItemType item)
-    {
+    public void enqueue(ItemType item) {
         Node oldlast = last;
         last = new Node();
         last.data = item;
         last.next = null;
 
-        if(isEmpty())
-        {
-            last = null;
+        if (isEmpty()) {
+            first = last;
         }
-        else
-        {
+        else {
             oldlast.next = last;
         }
-        size ++;
+
+        size++;
     }
 
-    public ItemType dequeue()
-    {
+    public ItemType dequeue() {
         ItemType item = first.data;
         first = first.next;
         size--;
-        if(isEmpty())
-        {
+        if (isEmpty()) {
             last = null;
         }
         return item;
     }
+
     /**
      * Returns an iterator over elements of type {@code T}.
      *
      * @return an Iterator.
      */
-
-    //page 155
     @Override
-    public Iterator<ItemType> iterator()
-    {
-        return new ListIterator();
+    public Iterator<ItemType> iterator() {
+        return new LinkedListIterator();
     }
 
-    private class ListIterator implements Iterator<ItemType>
-    {
-        private Node current = first;
+    private class LinkedListIterator implements Iterator<ItemType> {
+        private Node current;
 
-        public ListIterator()
-        {
+        public LinkedListIterator() {
             current = first;
         }
-        /**
-         * Returns {@code true} if the iteration has more elements.
-         * (In other words, returns {@code true} if {@link #next} would
-         * return an element rather than throwing an exception.)
-         *
-         * @return {@code true} if the iteration has more elements
-         */
+
         @Override
         public boolean hasNext() {
-            return current !=null;
+            return current != null;
         }
 
-        /**
-         * Returns the next element in the iteration.
-         *
-         * @return the next element in the iteration
-         * @throws NoSuchElementException if the iteration has no more elements
-         */
         @Override
         public ItemType next() {
             ItemType item = current.data;
