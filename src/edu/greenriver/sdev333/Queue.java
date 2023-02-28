@@ -31,7 +31,7 @@ public class Queue<ItemType> implements Iterable<ItemType> {
         last.next = null;
 
         if (isEmpty()){
-            last = null;
+            first = last;
         } else {
             oldLast.next = last;
         }
@@ -45,7 +45,7 @@ public class Queue<ItemType> implements Iterable<ItemType> {
         if (isEmpty()){
             last = null;
         }
-        return null; //change this
+        return item;
     }
     /**
      * Returns an iterator over elements of type {@code T}.

@@ -40,6 +40,10 @@ public class SeparateChainingHashST<KeyType, ValueType> implements SymbolTable<K
         return (ValueType) st[hash(key)].get(key);
     }
 
+    public boolean contains(KeyType key) {
+        return st[hash(key)].contains(key);
+    }
+
     @Override
     public int size() {
         //iterate through array

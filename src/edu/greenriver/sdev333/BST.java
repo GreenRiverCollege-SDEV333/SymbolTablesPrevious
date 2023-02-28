@@ -1,6 +1,7 @@
 package edu.greenriver.sdev333;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
@@ -15,7 +16,9 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     //field
     private Node root;
 
-    //helper class
+    /**
+     * Helper class to create the Nodes of the tree
+     */
     private class Node {
         private KeyType key;
         private ValueType val;
@@ -29,6 +32,12 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
             this.N = N;
         }
     }
+
+    /**
+     * Recursive method calls helper method to search for correct place to put the Key/Value pair
+     * @param key to be put in
+     * @param value to be put in
+     */
     @Override
     public void put(KeyType key, ValueType value) {
         root = put(root, key, value);
@@ -55,11 +64,21 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return current;
     }
 
+    /**
+     * Method to check if search tree contains the given key
+     * @param key
+     * @return Boolean True - Contains / False - Does not contain
+     */
     @Override
     public boolean contains(KeyType key) {
         return get(key) != null;
     }
 
+    /**
+     * Recursive method searches for given key and returns the value using the helper method for the recursion
+     * @param key
+     * @return calls helper method get(root,key)
+     */
     @Override
     public ValueType get(KeyType key) {
         // someone gives me a key, I want to find the value that goes with that key
@@ -80,7 +99,12 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return get(root,key);
     }
 
-    //recursion helper
+    /**
+     * Helper method for recursion
+     * @param current
+     * @param key
+     * @return current value after key is found (cmp = 0 )
+     */
     private ValueType get(Node current, KeyType key){
         //author uses x instead of current
         if (current == null){
@@ -97,6 +121,10 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         }
     }
 
+    /**
+     * Returns the size of the search tree
+     * @return root.N
+     */
     @Override
     public int size() {
         if (root == null){
@@ -106,6 +134,11 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         }
     }
 
+    /**
+     * returns the size of the current subtree
+     * @param current
+     * @return current.N size of current subtree
+     */
     private int size(Node current) {
         if (current == null){
             return 0;
@@ -114,6 +147,10 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         }
     }
 
+    /**
+     * recursive method uses helper method to get down to the left most node (minimum)
+     * @return key of the minimum node
+     */
     @Override
     public KeyType min() {
         //if empty then error (no minimum exists)
@@ -124,6 +161,11 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return current.key;
     }
 
+    /**
+     * Helper method to facilitate the recursion for the min method
+     * @param current
+     * @return current Node
+     */
     public Node min(Node current){
         //when current.left == null current == min
         if(current.left == null){
@@ -133,6 +175,10 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return min(current.left);
     }
 
+    /**
+     * Recursive method uses helper method to get to the right most node (max)
+     * @return
+     */
     @Override
     public KeyType max() {
         //if empty then error (no Maximum exists)
@@ -143,6 +189,11 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return current.key;
     }
 
+    /**
+     * Helper method to facilitate the recursion for the max method
+     * @param current
+     * @return current Node
+     */
     public Node max(Node current){
         //when current.right == null current == max
         if(current.right == null){
@@ -172,6 +223,7 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         else return current;
     }
 
+    //Or this one
     @Override
     public KeyType ceiling(KeyType key) {
         Node current = ceiling(root, key);
@@ -234,54 +286,73 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         }
     }
 
-    @Override
+//    @Override
+//    public Iterable<KeyType> keys() {
+//        //        return new Iterable<>() {
+//        //            public Iterator<KeyType> iterator() {
+//        //                return new BSTIterator<KeyType, ValueType>(root);
+//        //            }
+//        //        };
+//
+//        // or
+//
+//        return () -> new BSTIterator<KeyType, ValueType>(root);
+//    }
+//
+//    public class BSTIterator<KeyType extends Comparable<KeyType>, ValueType> implements Iterator<KeyType> {
+//
+//        private Node current;
+//        private Stack<Node> stack;
+//
+//        public BSTIterator(Node root) {
+//            current = root;
+//            stack = new Stack<>();
+//            while (current != null) {
+//                stack.push(current);
+//                current = current.left;
+//            }
+//        }
+//
+//        @Override
+//        public boolean hasNext() {
+//            return !stack.isEmpty();
+//        }
+//
+//        @Override
+//        public KeyType next() {
+//            //set current to top of the stack
+//            current = stack.pop();
+//            //set a variable for current key to be returned later
+//            KeyType key = (KeyType) current.key;
+//            //current.right night null then move to current.right
+//            //when current is not null push to stack then move left
+//            if (current.right != null) {
+//                current = current.right;
+//                while (current != null) {
+//                    stack.push(current);
+//                    current = current.left;
+//                }
+//            }
+//            return key;
+//        }
+//    }
+
     public Iterable<KeyType> keys() {
-        //        return new Iterable<>() {
-        //            public Iterator<KeyType> iterator() {
-        //                return new BSTIterator<KeyType, ValueType>(root);
-        //            }
-        //        };
-
-        // or
-
-        return () -> new BSTIterator<KeyType, ValueType>(root);
+        Queue<KeyType> queue = new Queue<KeyType>();
+        inorder(root, queue);
+        return new Iterable<KeyType>() {
+            public Iterator<KeyType> iterator() {
+                return queue.iterator();
+            }
+        };
     }
 
-    public class BSTIterator<KeyType extends Comparable<KeyType>, ValueType> implements Iterator<KeyType> {
-
-        private Node current;
-        private Stack<Node> stack;
-
-        public BSTIterator(Node root) {
-            current = root;
-            stack = new Stack<>();
-            while (current != null) {
-                stack.push(current);
-                current = current.left;
-            }
+    private void inorder(Node current, Queue<KeyType> queue) {
+        if (current == null) {
+            return;
         }
-
-        @Override
-        public boolean hasNext() {
-            return !stack.isEmpty();
-        }
-
-        @Override
-        public KeyType next() {
-            //set current to top of the stack
-            current = stack.pop();
-            //set a variable for current key to be returned later
-            KeyType key = (KeyType) current.key;
-            //current.right night null then move to current.right
-            //when current is not null push to stack then move left
-            if (current.right != null) {
-                current = current.right;
-                while (current != null) {
-                    stack.push(current);
-                    current = current.left;
-                }
-            }
-            return key;
-        }
+        inorder(current.left, queue);
+        queue.enqueue(current.key);
+        inorder(current.right, queue);
     }
 }

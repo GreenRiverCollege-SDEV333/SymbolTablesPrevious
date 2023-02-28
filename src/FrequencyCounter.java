@@ -1,6 +1,4 @@
-import edu.greenriver.sdev333.BST;
-import edu.greenriver.sdev333.OrderedSymbolTable;
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
