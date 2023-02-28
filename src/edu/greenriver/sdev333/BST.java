@@ -1,5 +1,7 @@
 package edu.greenriver.sdev333;
 
+import java.util.NoSuchElementException;
+
 /**
  * Binary Search Tree symbol table
  * Refer to p. 396-415 in Sedgewick and Wayne, Algorithms, 4th edition
@@ -24,12 +26,37 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
             this.N = N;
         }
     }
+
     @Override
     public void put(KeyType key, ValueType value) {
-
+        root = put(root, key, value);
+    }
+    //helper
+    private Node put(Node current, KeyType key, ValueType value){
+        //current is root of subtree we are currently at
+        //where we need to insert
+        if(current == null){
+            return new Node (key, value, 1);
+        }
+        int cmp = key.compareTo(current.key);
+        //go left
+        if(cmp < 0){
+            current.left = put(current.left, key, value);
+        }
+        //go right
+        else if(cmp > 0){
+            current.right = put(current.right, key, value);
+        }
+        else{
+            current.value = value;
+        }
+        //update N
+        current.N = size(current.left) + size(current.right) + 1;
+        return current;
     }
  //get helper method
     private ValueType get(Node current, KeyType key){
+
         if (current == null){
             return null;
         }
@@ -42,6 +69,7 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
             return get(current.right, key);
         }
         else{
+            System.out.println(current.value);
             return current.value;
         }
     }
@@ -86,12 +114,34 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public KeyType min() {
-        return null;
+        if(isEmpty()){
+            throw new NoSuchElementException();
+        }
+        Node current = min(root);
+        return current.key;
+    }
+    private Node min(Node current){
+        if(current.left == null){
+            return current;
+        }
+        return min(current.left);
     }
 
     @Override
     public KeyType max() {
-        return null;
+        if(isEmpty()){
+            throw new NoSuchElementException();
+        }
+        Node current = max(root);
+        return current.key;
+    }
+    private Node max(Node current){
+        if(current.right == null){
+            return current;
+        }
+        else{
+            return max(current.right);
+        }
     }
 
     @Override
@@ -116,6 +166,23 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        //empty queue to hold my result
+
+        Queue<KeyType> queue = new Queue<>();
+        //start recursion
+        inOrder(root, queue);
+        //when done return the queue
+        return queue;
+    }
+
+    private void inOrder(Node current, Queue<KeyType> q){
+        if(current == null){
+            //do nothing - intentionally blank
+            return;
+        }
+
+        inOrder(current.left, q);
+        q.enqueue(current.key);
+        inOrder(current.right, q);
     }
 }
