@@ -1,6 +1,6 @@
 import edu.greenriver.sdev333.SymbolTable;
 import java.util.Scanner;
-
+import edu.greenriver.sdev333.BST;
 /**
  * Basic symbol table test client
  * p. 370 of Sedgewick and Wayne
@@ -13,10 +13,22 @@ public class BasicTestClient {
         String inputString = "S E A R C H E X A M P L E";
 
         Scanner input = new Scanner(inputString);
-
+        /**
+         *  put(S,0)
+         *  put(E,1)
+         *  put(A,2)
+         *  put(R,3)
+         *  put(C,4)
+         *  put(H,5)
+         *  put(E,6)
+         *  put(X,7)
+         *  put(A,8)
+         *  put(M,9)
+         *
+         */
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new BST<>();
 
         int i = 0;
         while (input.hasNext()) {

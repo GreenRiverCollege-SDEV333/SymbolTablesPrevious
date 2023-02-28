@@ -31,7 +31,44 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public void put(KeyType key, ValueType value) {
+        // starts the recursion
+        root = put(root,key,value);
+    }
 
+    // helper method for put for recursion
+    private Node put(Node current, KeyType key, ValueType val) {
+        //current is the root of the subtree we are looking at
+
+        //we are at where we are supposed to be
+        if (current == null)
+        {
+            return new Node(key, val, 1);
+        }
+
+        int cmp = key.compareTo(current.key);
+            //cmp will be -1 (negative) if key < current.key
+           //cmp will be 0 (zero) if key == current.key
+            // cmp will be +1 (positive) if key> current.key
+        // go left
+        if(cmp < 0)
+        {
+            current.left = put(current.left, key, val);
+        }
+        else if(cmp > 0)
+        {
+            // go right
+            current.right = put(current.right, key, val);
+        }
+        else
+        {
+            // key already exists, replace the data(val)
+            current.val = val;
+        }
+
+        // update the node's N - number of nodes in the subtree
+        current.N = size(current.left) +size(current.right) + 1;
+
+        return current;
     }
 
     @Override
@@ -134,6 +171,29 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        // create a new empty queue to hold my results
+        Queue<KeyType> queue = new Queue<>();
+
+        // start the recursion, collecting results in the queue
+        inorder(root,queue);
+
+        // when done, return the queue
+        return queue;
     }
+
+    private void inorder(Node current, Queue<KeyType> q )
+    {
+        if(current == null)
+        {
+            // do nothing, end the method immediately
+            return;
+        }
+
+        inorder(current.left,q);
+        q.enqueue(current.key);
+        inorder(current.right,q);
+    }
+
+
+
 }
