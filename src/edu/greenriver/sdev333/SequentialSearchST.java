@@ -66,6 +66,15 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
     // keys without iterating through the entire list, so this method returns null.
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        // Create an empty queue
+        Queue<KeyType> queue = new Queue<>();
+        //create a current and start it at front
+        Node current = first;
+        //walk current to the back of the list
+        while (current != null) {
+            queue.enqueue(current.key);
+            current = current.next;
+        }
+        return queue;
     }
 }
