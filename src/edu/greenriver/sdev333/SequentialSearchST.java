@@ -7,13 +7,38 @@ package edu.greenriver.sdev333;
  * @param <ValueType>
  */
 public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyType, ValueType> {
-    @Override
-    public void put(KeyType key, ValueType value) {
+
+    private Node first; // first node in the linked list
+
+    private class Node {
+        KeyType key;
+        ValueType val;
+        Node next;
+
+        public Node(KeyType key, ValueType val, Node next) {
+            this.key = key;
+            this.val = val;
+            this.next = next;
+        }
 
     }
 
     @Override
+    public void put(KeyType key, ValueType value) {
+        for (Node x = first; x != null; x = x.next) {
+            if (key.equals(x.key)) {
+                x.val = value;
+                return;
+            }
+            first = new Node(key, value, first);
+        }
+    }
+
+    @Override
     public ValueType get(KeyType key) {
+        for (Node x = first; x != null; x = x.next)
+            if (key.equals(x.key))
+                return x.val;
         return null;
     }
 
@@ -24,6 +49,12 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
 
     @Override
     public Iterable<KeyType> keys() {
+
         return null;
     }
+
+
+
 }
+
+
