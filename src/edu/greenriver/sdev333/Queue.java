@@ -3,14 +3,14 @@ package edu.greenriver.sdev333;
 import java.util.Iterator;
 import java.util.ListIterator;
 
-public class Queue<ItemType> implements Iterable {
+public class Queue<ItemType> implements Iterable<ItemType> {
     private Node first;
     private Node last;
     private int size;
 
     private class Node{
-        ItemType data;
-        Node next;
+        private ItemType data;
+        private Node next;
     }
 
     public boolean isEmpty(){
@@ -18,7 +18,7 @@ public class Queue<ItemType> implements Iterable {
     }
 
     public int size(){
-        return size();
+        return size;
     }
 
     public void enqueue(ItemType item){
@@ -28,7 +28,7 @@ public class Queue<ItemType> implements Iterable {
         last.next = null;
 
         if(isEmpty()){
-            last = null;
+            first = last;
         }
         else{
             oldlast.next = last;
@@ -46,9 +46,9 @@ public class Queue<ItemType> implements Iterable {
 
     @Override
     public Iterator<ItemType> iterator(){
-        return new ListIterator();
+        return new LinkedListIterator();
     }
-    private class ListIterator implements Iterator<ItemType>{
+    private class LinkedListIterator implements Iterator<ItemType>{
 
         /**
          * Returns {@code true} if the iteration has more elements.
@@ -59,7 +59,7 @@ public class Queue<ItemType> implements Iterable {
          */
         private Node current;
 
-        public ListIterator(){
+        public LinkedListIterator(){
             current = first;
         }
         @Override
@@ -75,9 +75,9 @@ public class Queue<ItemType> implements Iterable {
          */
         @Override
         public ItemType next() {
-            ItemType a = current.data;
+            ItemType item = current.data;
             current = current.next;
-            return a;
+            return item;
         }
     }
 }
