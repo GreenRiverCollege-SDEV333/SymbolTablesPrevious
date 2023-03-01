@@ -20,7 +20,7 @@ public class FrequencyCounter {
         System.out.println("Hello world!");
 
         // BinaraySearchST I didn't create resize method, is that ok?
-        SymbolTable<String, Integer> st = new BinarySearchST<>(100000);
+        SymbolTable<String, Integer> st = new BinarySearchST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));

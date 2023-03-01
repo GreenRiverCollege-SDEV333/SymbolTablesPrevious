@@ -14,12 +14,44 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
     private KeyType[] keys;
     private ValueType[] vals;
     private int n;
+    private static final int CAPACITY = 10;
 
+    /*
+    Initializing an empty symbol table.
+     */
+    public BinarySearchST()
+    {
+        this(CAPACITY);
+    }
     public BinarySearchST(int capacity)
     {
         keys = (KeyType[])  new Comparable[capacity];
         vals = (ValueType[]) new Comparable[capacity];
     }
+    //resize() method
+    private void checkSize() {
+        if (n == keys.length) {
+            //resize up (double up the array size)
+
+            // step 1 - create a new larger array
+            KeyType[] temp = (KeyType[]) new Comparable[n * 2];
+            ValueType[] tempV = (ValueType[])  new Object[ n* 2];
+            // Step 2 = copy items from data to temp
+            for (int i = 0; i < n; i++) {
+                temp[i] = keys[i];
+                tempV[i] = vals[i];
+            }
+
+            //Step 3 - repoint/ reference data to point to new array
+            keys = temp;
+            vals = tempV;
+
+            // Optional:
+            //overwrite
+            temp = null;
+            tempV = null;
+        } //end of if (need to resize)
+    }// end of method
     @Override
     public void put(KeyType key, ValueType value) {
         int i = rank(key);
@@ -27,6 +59,10 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
         {
             vals[i] = value;
             return;
+        }
+        if( n == keys.length)
+        {
+            checkSize();
         }
         for(int j = n; j > i; j --)
         {
@@ -77,14 +113,49 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
         return keys[n-1];
     }
 
+    /**
+     *  Returns the largest key in this symbol table less than or equal to
+     * @param key
+     * @return
+     */
     @Override
     public KeyType floor(KeyType key) {
-        return null;
+        if(key == null)
+        {
+            throw new IllegalArgumentException("argument to floor() is null");
+        }
+        int i = rank(key);
+        if( i < n && key.compareTo(keys[i]) == 0)
+        {
+            return keys[i];
+        }
+        if( i == 0)
+        {
+            throw new NoSuchElementException("argument to floor() is too small");
+        }
+        else
+        {
+            return keys[i -1];
+        }
+
     }
 
+    // returns the smallest key in this map greater than or equal to
     @Override
     public KeyType ceiling(KeyType key) {
-        return null;
+        if (key == null)
+        {
+            throw new IllegalArgumentException("argument to ceiling() is null");
+        }
+        int i = rank(key);
+        if ( i == n)
+        {
+            throw new NoSuchElementException("argument to ceiling() is too large");
+        }
+        else
+        {
+            return keys[i];
+        }
     }
 
     @Override
@@ -113,7 +184,11 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
 
     @Override
     public KeyType select(int k) {
-        return null;
+        if( k < 0 || k > size())
+        {
+            throw new IllegalArgumentException("called select() with invalid argument: " + k);
+        }
+        return keys[k];
     }
 
     @Override
