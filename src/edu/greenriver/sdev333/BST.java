@@ -8,27 +8,44 @@ package edu.greenriver.sdev333;
  */
 public class BST<KeyType extends Comparable<KeyType>, ValueType> implements OrderedSymbolTable<KeyType, ValueType> {
 
-    // field
     private Node root;
 
-    // helper class
-    private class Node {
+    private class Node{
         private KeyType key;
         private ValueType val;
-        private Node left;
-        private Node right;
-        private int N;  // number of nodes in the subtree rooted here
+        private Node left, right;
+        private int n;
 
-        private Node(KeyType key, ValueType val, int N) {
+        public Node (KeyType key, ValueType val, int n){
             this.key = key;
             this.val = val;
-            this.N = N;
+            this.n = n;
         }
     }
-
     @Override
-    public void put(KeyType key, ValueType value) {
+    public void put(KeyType key, ValueType val) {
+        root = put(root, key, val);
+    }
 
+    // helper method for put for recursion
+    private Node put(Node x, KeyType key, ValueType val){
+        // current is the root of the subtree we are looking at
+
+
+        if(x == null){
+           return new Node(key, val, 1);
+        }
+        int cmp = key.compareTo(x.key);
+        // go left
+        if(cmp < 0) x.left = put(x.left, key, val);
+
+        //go right
+        else if (cmp >  0) x.right = put(x.right, key, val);
+
+        //we have arrived
+        else x.val = val;
+        x.n = size(x.left) + size(x.right) + 1;
+        return x;
     }
 
     @Override
@@ -36,63 +53,23 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return get(root, key);
     }
 
-    private ValueType get(Node current, KeyType key) {
-        // author uses x instead of current
-
-        if (current == null) {
-            return null;
-        }
-
-        int cmp = key.compareTo(current.key);
-
-        if (cmp < 0) {
-            return get(current.left, key);
-        } else if (cmp > 0) {
-            return get(current.right, key);
-        } else {
-            return current.val;
-        }
-
+    private ValueType get(Node x, KeyType key){
+        if(x == null){return null;}
+        int cmp = key.compareTo(x.key);
+        if(cmp < 0) return get(x.left, key);
+        else if (cmp > 0) return get(x.right, key);
+        else return x.val;
     }
-
-    /*
-    // non-recursive version
-    @Override
-    public ValueType get(KeyType key) {
-        // find the value for the given key
-        Node current = root;
-        while (current != null) {
-            int cmp = key.compareTo(current.key);
-                // pos - key.compareTo > current.key
-            if (cmp < 0) {
-                // go left
-                current = current.left;
-            }
-            else if (cmp > 0) {
-                // go right
-                current = current.right;
-            }
-            else {
-                return current.val;
-            }
-        }  // end while loop
-        // key is not present in tree
-        return null;
-    } */
 
     @Override
     public int size() {
         return size(root);
     }
 
-    private int size(Node current) {
-        if (current == null) {
-            return 0;
-        } else {
-            return current.N;
-        }
+    private int size(Node x){
+        if(x == null){ return 0;}
+        else{return x.n;}
     }
-
     @Override
     public KeyType min() {
         return null;
@@ -125,6 +102,28 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+
+        Queue<KeyType> queue = new Queue<>();
+
+        //start the recursion, collecting results in the queue
+        inorder(root, queue);
+
+        // when done return the queue
+        return queue;
     }
-}
+
+    private void inorder(Node current, Queue<KeyType> q){
+        if(current == null){
+            // do nothing - intentionally blank
+            return;
+        }
+        inorder(current.left, q);
+        q.enqueue(current.key);
+        inorder(current.right, q);
+    }
+
+    public boolean contains(KeyType key){
+        return get(key) != null;
+    }
+
+
