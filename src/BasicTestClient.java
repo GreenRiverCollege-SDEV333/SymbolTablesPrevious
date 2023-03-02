@@ -26,6 +26,8 @@ public class BasicTestClient {
             st.put(key, i);
             i++;
         }
+        System.out.println(((BinarySearchST<String, Integer>) st).floor("Z"));
+        System.out.println("size n = " + st.size());
         for (String s : st.keys()) {
             System.out.println(s + " " + st.get(s));
         }

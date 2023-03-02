@@ -88,6 +88,13 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
     @Override
     public KeyType floor(KeyType key) {
         int i = rank(key);
+        if(i >= n){
+            i = n-1;
+        }
+        int cmp = keys[i].compareTo(key);
+        if(cmp <= 0 ){
+            return keys[i];
+        }
         if(i > 0){
             i--;
             return keys[i];
