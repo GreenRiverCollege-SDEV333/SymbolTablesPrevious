@@ -1,3 +1,5 @@
+import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
 import java.util.Scanner;
 
@@ -16,7 +18,8 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new SequentialSearchST<>();
+//        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
 
         int i = 0;
         while (input.hasNext()) {
