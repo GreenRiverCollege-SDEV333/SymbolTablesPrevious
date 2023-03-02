@@ -1,4 +1,7 @@
 import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.SequentialSearchST;
+
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -12,12 +15,13 @@ import java.io.File;
  * of lines of code.
  */
 public class FrequencyCounter {
-    public static final int MINLEN = 1;
-    public static final String FILENAME = "tale.txt";
+    public static final int MINLEN = 8; // count words that are at least how many
+    // characters long - the minimum length
+    public static final String FILENAME = "tale.txt"; // changeable file name
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new SequentialSearchST<>(); // this is changeable
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
