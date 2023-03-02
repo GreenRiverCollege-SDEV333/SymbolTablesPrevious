@@ -14,9 +14,33 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
     public BinarySearchST(int capacity){
         keys = (KeyType[]) new Comparable[capacity];
         values = (ValueType[]) new Comparable[capacity];
+        n = 0;
     }
+//will not require a size to be passed as a parameter
+    public BinarySearchST(){
+        keys = (KeyType[]) new Comparable[10];
+        values = (ValueType[]) new Comparable[10];
+        n = 0;
+    }
+    //resize helper method
+    private void checkSize(){
+        if(n == keys.length){
+            KeyType [] tempKeys = (KeyType[]) new Comparable[(n * 2)];
+            ValueType [] tempValues = (ValueType[]) new Comparable[(n * 2)];
+
+            for(int i = 0; i < n; i++){
+                tempKeys[i] = keys[i];
+                tempValues[i] = values[i];
+            }
+
+            keys = tempKeys;
+            values = tempValues;
+        }
+    }
+
     @Override
     public void put(KeyType key, ValueType value) {
+        checkSize();
         int i = rank(key);
         if(i<n && keys[i].compareTo(key) == 0){
             values[i] = value;
@@ -63,6 +87,11 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
 
     @Override
     public KeyType floor(KeyType key) {
+        int i = rank(key);
+        if(i > 0){
+            i--;
+            return keys[i];
+        }
         return null;
     }
 
@@ -97,7 +126,7 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
 
     @Override
     public Iterable<KeyType> keys() {
-        Queue queue = new Queue<KeyType>();
+        Queue<KeyType> queue = new Queue<>();
         for(int i = 0; i<n; i++){
             queue.enqueue(keys[i]);
         }
@@ -105,7 +134,7 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
     }
     @Override
     public Iterable<KeyType> keys(KeyType low, KeyType hi) {
-        Queue queue = new Queue<KeyType>();
+        Queue<KeyType> queue = new Queue<>();
         for(int i = rank(low); i< rank(hi); i++){
             queue.enqueue(keys[i]);
         }

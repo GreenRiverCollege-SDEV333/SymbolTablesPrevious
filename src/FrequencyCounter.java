@@ -1,4 +1,5 @@
 import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.BinarySearchST;
 import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
 
@@ -19,7 +20,7 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new SequentialSearchST<>();
+        SymbolTable<String, Integer> st = new BinarySearchST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
@@ -45,6 +46,7 @@ public class FrequencyCounter {
             throw new RuntimeException(e);
         }
         System.out.println(st.size());
+//        System.out.println(((BinarySearchST<String, Integer>) st).floor("the"));
         // Find a key with the highest frequency count
         String maxWord = "";
         int maxCount = 0;
