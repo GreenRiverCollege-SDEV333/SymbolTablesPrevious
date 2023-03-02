@@ -13,7 +13,7 @@ import java.io.File;
  */
 public class FrequencyCounter {
     public static final int MINLEN = 1;
-    public static final String FILENAME = "tale.txt";
+    public static final String FILENAME = "333/333/SymbolTables/tale.txt";
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
