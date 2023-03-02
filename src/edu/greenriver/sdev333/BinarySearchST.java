@@ -7,6 +7,11 @@ package edu.greenriver.sdev333;
  * @param <ValueType>
  */
 public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> implements OrderedSymbolTable<KeyType, ValueType> {
+
+    private KeyType[] keys;
+    private ValueType[] vals;
+    private int n;
+
     @Override
     public void put(KeyType key, ValueType value) {
 
