@@ -10,6 +10,7 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
     private KeyType[] keys;
     private ValueType[] vals;
     private int n;
+
     public BinarySearchST(int capacity) {
         // see algorthm 1.1 for standard array-resizing code.
         keys = (KeyType[]) new Comparable[capacity];
@@ -54,12 +55,12 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
 
     @Override
     public KeyType min() {
-        return null;
+        return keys[0];
     }
 
     @Override
     public KeyType max() {
-        return null;
+        return keys[n-1];
     }
 
     @Override
@@ -69,21 +70,41 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
 
     @Override
     public KeyType ceiling(KeyType key) {
-        return null;
+        int i = rank(key);
+        return keys[i];
     }
 
     @Override
     public int rank(KeyType key) {
-        return 0;
+        int lo = 0, hi = n-1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            int cmp = key.compareTo(keys[mid]);
+            if (cmp < 0) {
+                hi = mid - 1;
+            } else if (cmp > 0) {
+                lo = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return lo;
     }
 
     @Override
     public KeyType select(int k) {
-        return null;
+        return keys[k];
     }
 
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        Queue<KeyType> queue = new Queue<>();
+        for (int i = rank(min()); i < rank(max()); i++) {
+            queue.enqueue(keys[i]);
+            if(contains(max())) {
+                queue.enqueue(keys[rank(max())]);
+            }
+        }
+        return queue;
     }
 }
