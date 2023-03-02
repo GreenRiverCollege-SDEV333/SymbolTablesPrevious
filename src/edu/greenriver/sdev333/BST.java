@@ -2,7 +2,8 @@ package edu.greenriver.sdev333;
 
 /**
  * Binary Search Tree symbol table
- * Refer to p. 396-415 in Sedgewick and Wayne, Algorithms, 4th edition
+ * Refer to p. 396-415 in Sedgewick and Wayne, Algorithms, 4th edition,
+ * pages 398-399
  * @param <KeyType>
  * @param <ValueType>
  */
@@ -26,16 +27,69 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         }
     }
 
+    /**
+     * This method adds a key/value pair to the tree, after first ascertaining its
+     * correct location.  It calls the private method put(Node,KeyType,ValueType)
+     * which performs this action recursively.
+     *
+     * @param key
+     * @param value
+     */
     @Override
     public void put(KeyType key, ValueType value) {
-
+        // in case the tree is empty, having = allows us to save/start the tree
+        root = put(root, key, value);
     }
 
+    // helper method for put, uses recursion
+    private Node put(Node current, KeyType key, ValueType val) {
+        // current is the root of the subtree we are looking at
+
+        // we are where we are supposed to be
+        if (current == null) {
+            // create a new node
+            return new Node(key, val, 1);
+        }
+
+        int cmp = key.compareTo(current.key);
+        // cmp will be < 0 if key < current
+        // cmp = 0 if key == current
+        // cmp > 0 if key > current
+
+        if (cmp < 0) {
+            // go left
+            current.left = put(current.left, key, val);
+        } else if (cmp > 0) {
+            // go right
+            current.right = put(current.right, key, val);
+        } else {
+            // key already exists, replace the data (val)zs
+            current.val = val;
+        }
+
+        // update the node's N, number of nodes in subtree
+        // size of left + size of right + self
+        current.N = size(current.left) + size(current.right) + 1;
+
+        return current;
+    }
+
+    /**
+     * Returns the object for key, calls the helper method
+     * get(Node,KeyType), which works recursively to get the
+     * given KeyType.
+     *
+     * @param key
+     * @return
+     */
     @Override
     public ValueType get(KeyType key) {
         return get(root, key);
     }
 
+    /*
+     * recursive version of get() method
+     */
     private ValueType get(Node current, KeyType key) {
         // author uses x instead of current
 
@@ -83,11 +137,16 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return null;
     } */
 
+    /**
+     * Returns the size of the tree, calls the helper method size(Node)
+     * @return
+     */
     @Override
     public int size() {
         return size(root);
     }
 
+    // helper method for public int size()
     private int size(Node current) {
         if (current == null) {
             return 0;
@@ -96,38 +155,94 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         }
     }
 
+    /**
+     * not implemented
+     * @return
+     */
     @Override
     public KeyType min() {
         return null;
     }
 
+    /**
+     * not implemented
+     * @return
+     */
     @Override
     public KeyType max() {
         return null;
     }
 
+    /**
+     * not implemented
+     * @param key
+     * @return
+     */
     @Override
     public KeyType floor(KeyType key) {
         return null;
     }
 
+    /**
+     * not implemented
+     * @param key
+     * @return
+     */
     @Override
     public KeyType ceiling(KeyType key) {
         return null;
     }
 
+    /**
+     * not implemented
+     * @param key
+     * @return
+     */
     @Override
     public int rank(KeyType key) {
         return 0;
     }
 
+    /**
+     * not implemented
+     * @param k
+     * @return
+     */
     @Override
     public KeyType select(int k) {
         return null;
     }
 
+    /*
+     * implement our in-order traversal here
+     */
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        // new empty queue to hold results
+        Queue<KeyType> queue = new Queue<>();
+
+        // start the recursion
+        inorder(root, queue);
+
+        return queue;
+    }
+
+
+    // Helper method for keys(), recursively finds list of
+    // keys inside tree
+    private void inorder(Node current, Queue<KeyType> q) {
+        if (current == null) {
+            // do nothing - intentionally blank
+            return;
+        }
+
+        // left subtree
+        inorder(current.left, q);
+
+        // add self to queue
+        q.enqueue(current.key);
+
+        // right subtree
+        inorder(current.right, q);
     }
 }
