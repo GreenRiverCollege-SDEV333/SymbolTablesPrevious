@@ -1,9 +1,5 @@
 package edu.greenriver.sdev333;
 
-import com.sun.jdi.Value;
-
-import java.security.Key;
-
 /**
  * Sequential search (unordered linked list implementation) of Symbol Table
  * Refer to p. 374-377 in Sedgewick and Wayne, Algorithms, 4th edition
@@ -18,10 +14,10 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
     // private helper class
     private class Node {
         // linked list node
-        Key key;
-        Value val;
+        KeyType key;
+        ValueType val;
         Node next;
-        public Node(Key key, Value val, Node next) {
+        public Node(KeyType key, ValueType val, Node next) {
             this.key = key;
             this.val = val;
             this.next = next;
@@ -30,22 +26,14 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
 
     @Override
     public void put(KeyType key, ValueType value) {
-        Node current = first;
 
-        while ( current != null ) {
-            if ( key.equals(current.key) ) {
-                // update value if the key is found
-                current.val.equals(value);
-            }
-            if ( !key.equals(current.key) ) {
-                // increment iterator if not the key
-                current = current.next;
-            }
-            // if no key is found, create a new Node pointing at "first"
-            else {
-                Node newNode = new Node((Key) key, (Value) value, first);
+        for(Node x = first; x != null; x = x.next ){
+            if(key.equals(x.key)){
+                x.val = value;
+                return;
             }
         }
+        first = new Node(key, value, first);
     }
 
     /**
@@ -56,14 +44,9 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
     @Override
     public ValueType get(KeyType key) {
 
-        Node current = first;
-
-        while ( current != null ) {
-            if ( key.equals(current.key) ) {
-                return (ValueType) current.val;
-            }
-            else {
-                current = current.next;
+        for(Node x = first; x != null; x = x.next){
+            if(key.equals(x.key)){
+                return x.val;
             }
         }
         return null;
@@ -71,11 +54,20 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
 
     @Override
     public int size() {
+
         return 0;
     }
 
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+
+        Queue<KeyType> keyQueue = new Queue<>();
+
+        Node current = first;
+        while(current != null) {
+            keyQueue.enqueue(current.key);
+            current = current.next;
+        }
+        return keyQueue;
     }
 }

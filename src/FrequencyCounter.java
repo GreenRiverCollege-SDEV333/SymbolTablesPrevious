@@ -1,4 +1,5 @@
 import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
 
 import java.io.FileNotFoundException;

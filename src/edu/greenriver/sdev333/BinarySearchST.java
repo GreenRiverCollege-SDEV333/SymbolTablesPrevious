@@ -25,7 +25,19 @@
 //
 //    @Override
 //    public void put(KeyType key, ValueType value) {
-//
+//        // search for key. Update value if found, grow table if new
+//        int i = rank(key);
+//        if( i < n && ((KeyType)keys[i]).compareTo(key) == 0) {
+//            vals[i] = (Value) value;
+//            return;
+//        }
+//        for ( int j = n; j > i; j-- ) {
+//            keys[j] = keys[j - 1];
+//            vals[j] = vals[j - 1];
+//        }
+//        keys[i] = (Key) key;
+//        vals[i] = (Value) value;
+//        n++;
 //    }
 //
 //    @Override
@@ -35,8 +47,11 @@
 //        }
 //        // need to finish
 //        int i = rank(key);
-//        if( i < n && keys[i].compareTo(Key) == 0) {
-//
+//        if( i < n && ((KeyType)keys[i]).compareTo(key) == 0) {
+//            return (ValueType) vals[i];
+//        }
+//        else {
+//            return null;
 //        }
 //    }
 //
@@ -48,12 +63,12 @@
 //
 //    @Override
 //    public KeyType min() {
-//        return null;
+//        return (KeyType) keys[0];
 //    }
 //
 //    @Override
 //    public KeyType max() {
-//        return null;
+//        return (KeyType) keys[n - 1];
 //    }
 //
 //    @Override
@@ -63,21 +78,46 @@
 //
 //    @Override
 //    public KeyType ceiling(KeyType key) {
-//        return null;
+//        int i = rank(key);
+//        return (KeyType) keys[i];
 //    }
 //
 //    @Override
 //    public int rank(KeyType key) {
-//        return 0;
+//        int lo = 0;
+//        int hi = n - 1;
+//        while( lo <= hi ) {
+//            int mid = lo + (hi - lo) / 2;
+//            int cmp = key.compareTo((KeyType) keys[mid]);
+//
+//            if( cmp < 0) {
+//                hi = mid - 1;
+//            }
+//            else if (cmp > 0){
+//                lo = mid + 1;
+//            }
+//            else {
+//                return mid;
+//            }
+//        }
+//        return lo;
 //    }
 //
 //    @Override
 //    public KeyType select(int k) {
-//        return null;
+//        return (KeyType) keys[k];
 //    }
 //
 //    @Override
-//    public Iterable<KeyType> keys() {
-//        return null;
+//    public Iterable<KeyType> keys( Key lo, Key hi) {
+//        Queue<Key> queue = new Queue<Key>();
+//
+//        for (int i = rank((KeyType) lo); i < rank((KeyType) hi); i++) {
+//            queue.enqueue(keys[i]);
+//            if( contains((KeyType) hi) ) {
+//                queue.enqueue(keys[rank((KeyType) hi)]);
+//            }
+//        }
+//        return queue;
 //    }
 //}
