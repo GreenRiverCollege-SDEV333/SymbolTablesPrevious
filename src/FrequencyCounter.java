@@ -1,5 +1,6 @@
 import edu.greenriver.sdev333.BST;
 import edu.greenriver.sdev333.BinarySearchST;
+import edu.greenriver.sdev333.SeparateChainingHashST;
 import edu.greenriver.sdev333.SymbolTable;
 
 import java.io.FileNotFoundException;
@@ -19,7 +20,7 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         //System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new BST<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
@@ -53,14 +54,15 @@ public class FrequencyCounter {
 
         //System.out.println("doing this now...");
         for (String currentWord : st.keys()) {
-            //System.out.println(currentWord);
+            //System.out.println(currentWord +" : " + st.get(currentWord));
             int currentCount = st.get(currentWord);
             if (currentCount > maxCount) {
                 maxWord = currentWord;
+                //System.out.println(currentWord);
                 maxCount = currentCount;
             }
         }
 
-        System.out.println("Most frequent word: "+maxWord + "  Count: " + maxCount);
+        System.out.println("Most frequent word: " + maxWord + "      Count: " + maxCount);
     }
 }
