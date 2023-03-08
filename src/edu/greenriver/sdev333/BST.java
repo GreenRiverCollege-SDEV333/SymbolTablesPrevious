@@ -156,35 +156,51 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     }
 
     /**
-     * not implemented
+     * lowest key
      * @return
      */
     @Override
     public KeyType min() {
-        return null;
+
+        Node n = root;
+        while (n.left != null) {
+            n = n.left;
+        }
+
+        return n.key;
     }
 
     /**
-     * not implemented
+     * highest key
      * @return
      */
     @Override
     public KeyType max() {
-        return null;
+        Node n = root;
+        while (n.right != null) {
+            n = n.right;
+        }
+
+        return n.key;
     }
 
     /**
-     * not implemented
+     * return the key node if present, otherwise
+     * the node just below key in ordering
      * @param key
      * @return
      */
     @Override
     public KeyType floor(KeyType key) {
-        return null;
+        Node n = root;
+
+        while ()
+
     }
 
     /**
-     * not implemented
+     * return key node if present, otherwise return
+     * the next highest node that is present
      * @param key
      * @return
      */
