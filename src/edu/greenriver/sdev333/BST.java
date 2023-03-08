@@ -194,7 +194,9 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     public KeyType floor(KeyType key) {
         Node n = root;
 
-        while ()
+        while () {
+
+        }
 
     }
 
