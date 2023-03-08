@@ -1,4 +1,5 @@
 import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.SeparateChainingHashST;
 import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
 
@@ -19,7 +20,8 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new SequentialSearchST<>();
+       // SymbolTable<String, Integer> st = new SequentialSearchST<>();   //prints 0
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>();   //prints 0
        // SymbolTable<String, Integer> st = new TreeMapWrapper<>();
 
         try {
