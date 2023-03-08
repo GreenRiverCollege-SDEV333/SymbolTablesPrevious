@@ -10,46 +10,29 @@ import java.util.List;
  * @param <ValueType>
  */
 public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> implements OrderedSymbolTable<KeyType, ValueType> {
-    private List<KeyType> keys;
-    private List<ValueType> vals;
-    //private int size;
+    private KeyType[] keys;
+    private ValueType[] vals;
+    private int N;
 
-    public BinarySearchST() {
-        //Does not resize array if needed
-        //keys = (KeyType[]) new Comparable[capacity];
-        keys = new ArrayList<>();
-        //vals = (ValueType[]) new Object[capacity];
-        vals = new ArrayList<>();
+    public BinarySearchST(int capacity) {
+        keys = (KeyType[])new Comparable[capacity];
+        vals = (ValueType[])new Object[capacity];
     }
 
     @Override
     public void put(KeyType key, ValueType value) {
-        //Search for key.  Update value if found, grow table if new.
-        if(keys.isEmpty()){
-            keys.add(key);
-            vals.add(value);
-            return;
-        }
         int i = rank(key);
-        if(i<keys.size() && keys.get(i).compareTo(key) == 0){
-            //vals[i] = value;
-            vals.set(i, value);
+        if (i < N && keys[i].compareTo(key) == 0) {
+            vals[i] = value;
             return;
         }
-        //add dummy
-        keys.add(key);
-        vals.add(value);
-        for(int j = keys.size()-1; j > i; j--){
-            //keys[j] = keys[j-1];
-            keys.set(j,keys.get(j-1));
-            //vals[j] = vals[j-1];
-            vals.set(j, vals.get(j-1));
+        for (int j = N; j > i; j--) {
+            keys[j] = keys[j-1];
+            vals[j] = vals[j-1];
         }
-        //keys[i] = key;
-        keys.set(i, key);
-        //vals[i] = value;
-        vals.set(i, value);
-        //size++;
+        keys[i] = key;
+        vals[i] = value;
+        N++;           
     }
 
 
@@ -141,11 +124,13 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
 
     @Override
     public Iterable<KeyType> keys() {
-        ArrayList<KeyType> keyList = new ArrayList<>();
-        for(int i = 0; i < keys.size(); i++){
-            keyList.add(keys.get(i));
+        Queue<KeyType> queue = new Queue<>();
+
+        for (int i = 0; i < N; i++) {
+            queue.enqueue(keys[i]);
         }
-        return keyList;
+
+        return queue;
     }
 
     public boolean contains(KeyType key){

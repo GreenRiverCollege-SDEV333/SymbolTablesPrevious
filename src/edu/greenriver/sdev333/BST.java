@@ -24,12 +24,42 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     }
     @Override
     public void put(KeyType key, ValueType val) {
-        root = put(root, key, val);
+        root = put(root, key, value);
     }
 
-    // helper method for put for recursion
-    private Node put(Node x, KeyType key, ValueType val){
+    // helper method for put, uses recursion
+    private Node put(Node current, KeyType key, ValueType val) {
         // current is the root of the subtree we are looking at
+
+        // we are where we are supposed to be
+        if (current == null) {
+            // create a new node
+            return new Node(key, val, 1);
+        }
+
+        int cmp = key.compareTo(current.key);
+        // cmp will be < 0 if key < current
+        // cmp = 0 if key == current
+        // cmp > 0 if key > current
+
+        if (cmp < 0) {
+            // go left
+            current.left = put(current.left, key, val);
+        } else if (cmp > 0) {
+            // go right
+            current.right = put(current.right, key, val);
+        } else {
+            // key already exists, replace the data (val)zs
+            current.val = val;
+        }
+
+        // update the node's N, number of nodes in subtree
+        // size of left + size of right + self
+        current.N = size(current.left) + size(current.right) + 1;
+
+        return current;
+    }
+
 
 
         if(x == null){
@@ -103,13 +133,32 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     @Override
     public Iterable<KeyType> keys() {
 
+        // new empty queue to hold results
         Queue<KeyType> queue = new Queue<>();
 
-        //start the recursion, collecting results in the queue
+        // start the recursion
         inorder(root, queue);
 
-        // when done return the queue
         return queue;
+    }
+
+
+    // Helper method for keys(), recursively finds list of
+    // keys inside tree
+    private void inorder(Node current, Queue<KeyType> q) {
+        if (current == null) {
+            // do nothing - intentionally blank
+            return;
+        }
+
+        // left subtree
+        inorder(current.left, q);
+
+        // add self to queue
+        q.enqueue(current.key);
+
+        // right subtree
+        inorder(current.right, q);
     }
 
     private void inorder(Node current, Queue<KeyType> q){
