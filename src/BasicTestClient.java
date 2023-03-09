@@ -1,4 +1,5 @@
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
+
 import java.util.Scanner;
 
 /**
@@ -16,15 +17,22 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        BST<String, Integer> st = new BST<>();
 
         int i = 0;
         while (input.hasNext()) {
             String key = input.next();
             st.put(key, i);
+            System.out.println("the rank is :" + st.rank(key));
+            System.out.println("the floor is :" + st.floor(key));
+            System.out.println("the ceiling is :" + st.ceiling(key));
             i++;
-        }
 
+
+
+        }
+        System.out.println("the max is :" + st.max());
+        System.out.println("the min is :" + st.min());
         for (String s : st.keys()) {
             System.out.println(s + " " + st.get(s));
         }

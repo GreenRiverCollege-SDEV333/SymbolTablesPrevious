@@ -1,4 +1,4 @@
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -12,12 +12,12 @@ import java.io.File;
  * of lines of code.
  */
 public class FrequencyCounter {
-    public static final int MINLEN = 1;
+    public static final int MINLEN = 0;
     public static final String FILENAME = "tale.txt";
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
@@ -29,6 +29,8 @@ public class FrequencyCounter {
                     continue;
                 }
 
+               // System.out.println("Adding word: " + word);
+
                 if (!st.contains(word)) {
                     // if the word is not in the symbol table
                     // put it in with a value of 1
@@ -38,6 +40,10 @@ public class FrequencyCounter {
                     int count = st.get(word);   // get existing word count
                     count++;                    // increment/update the count
                     st.put(word, count);        // put updated word count
+                }
+                //System.out.println("Symbol table contents:");
+                for (String key : st.keys()) {
+                    System.out.println(key + ": " + st.get(key));
                 }
             }
         } catch (FileNotFoundException e) {
