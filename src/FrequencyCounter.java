@@ -1,7 +1,4 @@
-import edu.greenriver.sdev333.BST;
-import edu.greenriver.sdev333.BinarySearchST;
-import edu.greenriver.sdev333.SequentialSearchST;
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -16,11 +13,11 @@ import java.io.File;
  */
 public class FrequencyCounter {
     public static final int MINLEN = 0;
-    public static final String FILENAME = "tinyTinyTale.txt";
+    public static final String FILENAME = "tale.txt";
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new SequentialSearchST<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
@@ -32,7 +29,7 @@ public class FrequencyCounter {
                     continue;
                 }
 
-                System.out.println("Adding word: " + word);
+               // System.out.println("Adding word: " + word);
 
                 if (!st.contains(word)) {
                     // if the word is not in the symbol table
@@ -44,7 +41,7 @@ public class FrequencyCounter {
                     count++;                    // increment/update the count
                     st.put(word, count);        // put updated word count
                 }
-                System.out.println("Symbol table contents:");
+                //System.out.println("Symbol table contents:");
                 for (String key : st.keys()) {
                     System.out.println(key + ": " + st.get(key));
                 }
