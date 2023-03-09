@@ -1,3 +1,5 @@
+import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.SeparateChainingHashST;
 import edu.greenriver.sdev333.SymbolTable;
 import java.util.Scanner;
 
@@ -16,7 +18,9 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new BST<>();
+
+
 
         int i = 0;
         while (input.hasNext()) {
@@ -28,5 +32,13 @@ public class BasicTestClient {
         for (String s : st.keys()) {
             System.out.println(s + " " + st.get(s));
         }
+
+
+        System.out.println("Min: " + ((BST<String, Integer>) st).min() );
+        System.out.println("Max: " + ((BST<String, Integer>) st).max());
+        System.out.println("Floor F: " + ((BST<String, Integer>) st).floor("F"));
+        System.out.println("Celing F: " + ((BST<String, Integer>) st).ceiling("F"));
+        System.out.println("Rank H: " + ((BST<String, Integer>) st).rank("H"));
+
     }
 }
