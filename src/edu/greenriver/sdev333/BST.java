@@ -127,13 +127,35 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public KeyType floor(KeyType key) {
-        return null;
+        Node x = floor(root, key);
+        if(x == null){
+            throw new IllegalArgumentException();
+        }
+        return x.key;
     }
-
+    private Node floor(Node x, KeyType key){
+        if(x == null){
+            return null;
+        }
+        int cmp = key.compareTo(x.key);
+        if(cmp == 0){
+            return x;
+        }
+        if(cmp < 0){
+            return floor(x.left, key);
+        }
+        Node t = floor(x.right, key);
+        if(t != null){
+            return t;
+        }else{
+            return x;
+        }
+    }
     @Override
     public KeyType ceiling(KeyType key) {
         return null;
     }
+
 
     @Override
     public int rank(KeyType key) {
