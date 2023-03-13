@@ -16,7 +16,7 @@ import java.io.File;
  */
 public class FrequencyCounter {
     public static final int MINLEN = 1;
-    public static final String FILENAME = "tinyTale.txt";
+    public static final String FILENAME = "tale.txt";
     public static void main(String[] args) {
         System.out.println("Hello world!");
 

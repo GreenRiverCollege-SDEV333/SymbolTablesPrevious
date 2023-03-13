@@ -1,5 +1,6 @@
 import edu.greenriver.sdev333.BST;
 import edu.greenriver.sdev333.BinarySearchST;
+import edu.greenriver.sdev333.SeparateChainingHashST;
 import edu.greenriver.sdev333.SymbolTable;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new BinarySearchST<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>(10);
 
         int i = 0;
         while (input.hasNext()) {
@@ -26,7 +27,7 @@ public class BasicTestClient {
             st.put(key, i);
             i++;
         }
-        System.out.println(((BinarySearchST<String, Integer>) st).floor("Z"));
+//        System.out.println(((BinarySearchST<String, Integer>) st).floor("Z"));
         System.out.println("size n = " + st.size());
         for (String s : st.keys()) {
             System.out.println(s + " " + st.get(s));

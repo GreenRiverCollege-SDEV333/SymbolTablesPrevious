@@ -77,24 +77,6 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     public ValueType get(KeyType key) {
        return get(root, key);
 
-        //while loop version below
-// key passed in, find the value that belongs to it
-//        Node current = root;
-//        while (current != null){
-//            //compareTo returns neg, zero, pos
-//            int cmp = key.compareTo(current.key);
-//            if(cmp < 0){
-//                current = current.left;
-//            }
-//            else if (cmp > 0) {
-//                current = current.right;
-//            }
-//            else {
-//                return current.value;
-//
-//            }
-//        }//end of while
-//        return null;
     }
 
     @Override
@@ -155,12 +137,43 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public int rank(KeyType key) {
-        return 0;
+        return rank(key, root);
+    }
+    private int rank(KeyType key, Node x){
+        if(x == null){
+            return 0;
+        }
+        int cmp = key.compareTo(x.key);
+        if(cmp < 0){
+            return rank(key, x.left);
+        }
+        else if(cmp > 0){
+            return 1 + size(x.left) + rank(key, x.right);
+        }else{
+            return size(x.left);
+        }
     }
 
     @Override
     public KeyType select(int k) {
-        return null;
+        if(k<0 || k > size()){
+            throw new IllegalArgumentException();
+        }
+        Node x = select(root, k);
+        return x.key;
+    }
+    private Node select(Node x, int k){
+        if(x == null){
+            return null;
+        }
+        int t = size(x.left);
+        if(t>k){
+            return select(x.left, k);
+        }else if(t<k){
+            return select(x.right, k-t-1);
+        }else{
+            return x;
+        }
     }
 
     @Override
