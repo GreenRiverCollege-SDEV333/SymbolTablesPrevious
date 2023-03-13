@@ -29,6 +29,17 @@ public class SeparateChainingHashST<KeyType, ValueType> implements SymbolTable<K
         }
     }
 
+    /**
+     * Returns a boolean value indicating whether the
+     * given key exists in the data structure or not.
+     * @param key
+     * @return
+     */
+    @Override
+    public boolean contains(KeyType key) {
+        return get(key) != null;
+    }
+
     private int hash(KeyType key) {
         // hash function = they give me a key, I return an int (bucket #)
         return (key.hashCode() & 0x7fffffff) % M;

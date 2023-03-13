@@ -109,34 +109,6 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     }
 
-    /*
-    // non-recursive version
-    @Override
-    public ValueType get(KeyType key) {
-        // find the value for the given key
-
-        Node current = root;
-        while (current != null) {
-            int cmp = key.compareTo(current.key);
-                // pos - key.compareTo > current.key
-
-            if (cmp < 0) {
-                // go left
-                current = current.left;
-            }
-            else if (cmp > 0) {
-                // go right
-                current = current.right;
-            }
-            else {
-                return current.val;
-            }
-        }  // end while loop
-
-        // key is not present in tree
-        return null;
-    } */
-
     /**
      * Returns the size of the tree, calls the helper method size(Node)
      * @return
@@ -187,49 +159,155 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     /**
      * return the key node if present, otherwise
      * the node just below key in ordering
+     * find largest key that is less than or equal
+     * to the given key
+     * ex 3.1.17
      * @param key
      * @return
      */
     @Override
     public KeyType floor(KeyType key) {
-        Node n = root;
 
-        while () {
+        Node x = floor(root, key);
 
+        if (x == null) {
+            return null;
         }
 
+        return x.key;
     }
+
+    /*
+     * Look recursively for the floor, i.e. the largest key
+     * that is less/equal to the given key
+     * code from book Algorithms
+     * @param x
+     * @param key
+     * @return
+     */
+    private Node floor(Node x, KeyType key) {
+        if (x == null)
+            return null;
+
+        int cmp = key.compareTo(x.key);
+
+        if (cmp == 0)
+            return x;
+
+        if (cmp < 0)
+            return floor(x.left, key);
+
+        Node t = floor(x.right,key);
+
+        if (t != null)
+            return t;
+        else
+            return x;
+    }
+
 
     /**
      * return key node if present, otherwise return
      * the next highest node that is present
+     * find smallest key that is greater than or equal
+     * to the given key
+     * ex 3.1.16
      * @param key
      * @return
      */
     @Override
     public KeyType ceiling(KeyType key) {
-        return null;
+        Node x = ceiling(root, key);
+
+        if (x == null) {
+            return null;
+        }
+
+        return x.key;
     }
 
     /**
-     * not implemented
+     * Look recursively for the ceiling, i.e. the smallest key
+     * that is greater/equal to the given key
+     * @param x
+     * @param key
+     * @return
+     */
+    private Node ceiling(Node x, KeyType key) {
+        if (x == null)
+            return null;
+
+        int cmp = key.compareTo(x.key);
+
+        if (cmp == 0)
+            return x;
+
+        if (cmp > 0)
+            return ceiling(x.right, key);
+
+        Node t = ceiling(x.left,key);
+
+        if (t != null)
+            return t;
+        else
+            return x;
+    }
+
+    /**
+     * return N value from node to left of this one, or 0 if null
      * @param key
      * @return
      */
     @Override
     public int rank(KeyType key) {
-        return 0;
+        return rank(root, key);
+    }
+
+    private int rank(Node n, KeyType key) {
+        if (n == null)
+            return 0;
+
+        int compare = key.compareTo(n.key);
+
+        if (compare < 0)
+            return rank(n.left, key);
+
+        if (compare > 0)
+            return 1 + size(n.left) + rank(n.right, key);
+        else
+            return size(n.left);
     }
 
     /**
-     * not implemented
+     * Code from the book, Algorithms.
      * @param k
      * @return
      */
     @Override
     public KeyType select(int k) {
-        return null;
+        return select(k, root).key;
     }
+
+    /*
+     * Recursive helper method for select(int k).
+     * @param k
+     * @param n
+     * @return
+     */
+    private Node select(int k, Node n) {
+        if (n == null) {
+            return null;
+        }
+        int t = size(n.left);
+        if (t > k) {
+            return select(k, n.left);
+        } else if (t < k) {
+            return select(k-t-1, n.right);
+        } else {
+            return n;
+        }
+    }
+
 
     /*
      * implement our in-order traversal here
