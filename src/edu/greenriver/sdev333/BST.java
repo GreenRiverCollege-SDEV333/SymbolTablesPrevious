@@ -41,11 +41,11 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         int cmp = key.compareTo(current.key);
         //go left
         if(cmp < 0){
-             put(current.left, key, value);
+            current.left = put(current.left, key, value);
         }
         //go right
         else if(cmp > 0){
-             put(current.right, key, value);
+             current.right = put(current.right, key, value);
         }
         else{
             current.value = value;
