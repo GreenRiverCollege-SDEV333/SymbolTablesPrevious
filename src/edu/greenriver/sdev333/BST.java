@@ -79,6 +79,30 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     }
     */
 
+
+    public boolean contains(KeyType key) {
+        Node current = root;
+
+        while (current != null) {
+            int cmp = key.compareTo(current.key);
+
+            if (cmp == 0) {
+                // We found an exact match for the key, so return true
+                return true;
+            } else if (cmp < 0) {
+                // The key is less than the current node's key, so move left
+                current = current.left;
+            } else {
+                // The key is greater than the current node's key, so move right
+                current = current.right;
+            }
+        }
+
+        // If we get here, we didn't find a matching key in the tree
+        return false;
+    }
+
+
     @Override
     public ValueType get(KeyType key) {
         return get(root, key);

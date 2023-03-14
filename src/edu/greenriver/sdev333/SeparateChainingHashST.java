@@ -7,6 +7,7 @@ package edu.greenriver.sdev333;
  * @param <ValueType>
  */
 public class SeparateChainingHashST<KeyType, ValueType> implements SymbolTable<KeyType, ValueType> {
+    //private
     @Override
     public void put(KeyType key, ValueType value) {
 
