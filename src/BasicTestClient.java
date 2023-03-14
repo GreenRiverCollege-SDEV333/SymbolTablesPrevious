@@ -39,10 +39,10 @@ public class BasicTestClient {
         System.out.println("Binary Search Tree assignment");
         System.out.println("Binary min: " + ((BST<String, Integer>) st).min() + " Expected: A");
         System.out.println("Binary max: " + ((BST<String, Integer>) st).max() + " Expected: X");
-        System.out.println("Binary floor: " + ((BST<String, Integer>) st).floor("B") + " Expected: A");
-        System.out.println("Binary ceiling: " + ((BST<String, Integer>) st).ceiling("B") +" Expected: C");
-        System.out.println("Binary select: " + ((BST<String, Integer>) st).select(0) +" Expected: A");
-        System.out.println("Binary rank: " + ((BST<String, Integer>) st).rank("A") +" Expected: 0");
+        System.out.println("Binary floor of 'B': " + ((BST<String, Integer>) st).floor("B") + " Expected: A");
+        System.out.println("Binary ceiling of 'B': " + ((BST<String, Integer>) st).ceiling("B") +" Expected: C");
+        System.out.println("Binary select 0: " + ((BST<String, Integer>) st).select(0) +" Expected: A");
+        System.out.println("Binary rank of 'A': " + ((BST<String, Integer>) st).rank("A") +" Expected: 0");
         System.out.println("------------------------------------------------------------------------------------");
 
 
