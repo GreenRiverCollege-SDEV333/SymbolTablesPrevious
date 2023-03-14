@@ -1,9 +1,8 @@
-import edu.greenriver.sdev333.BST;
-import edu.greenriver.sdev333.BinarySearchST;
-import edu.greenriver.sdev333.SequentialSearchST;
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
 
 import javax.security.auth.kerberos.KeyTab;
+import java.security.Key;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -21,12 +20,13 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new BST();
-
+        SymbolTable<String, Integer> scHashST = new SeparateChainingHashST<>(100);
+        SymbolTable<String, Integer> st = new BST<>();
         int i = 0;
         while (input.hasNext()) {
             String key = input.next();
             st.put(key, i);
+            scHashST.put(key, i);
             i++;
         }
 
@@ -45,8 +45,19 @@ public class BasicTestClient {
         System.out.println("Binary rank of 'A': " + ((BST<String, Integer>) st).rank("A") +" Expected: 0");
         System.out.println("------------------------------------------------------------------------------------");
 
+        //SeparateChainingHashST - get, put, keys, size, contains
+        System.out.println("SeparateChainingHashST assignment");
+        System.out.println("Get A is " + scHashST.get("A"));
+        System.out.println("Put already done below the create new hash object!");
+        System.out.println("Size of scHashST is " + scHashST.size());
+        System.out.println("A contained in scHashST: " + scHashST.contains("A"));
 
+        Iterator itr = scHashST.keys().iterator();
 
-
+        System.out.print("Keys() iterator method test: ");
+        while(itr.hasNext()) {
+            String element = (String) itr.next();
+            System.out.print(element + " ");
+        }
     }
 }
