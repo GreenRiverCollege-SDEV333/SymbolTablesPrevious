@@ -1,7 +1,7 @@
 package edu.greenriver.sdev333;
 
-import edu.greenriver.sdev333.Queue;
-//import java.util.Queue;
+
+import java.util.NoSuchElementException;
 
 /**
  * Binary Search Tree symbol table
@@ -116,38 +116,133 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public KeyType min() {
-        return null;
+        if (isEmpty()) throw new NoSuchElementException();
+        Node current = min(root);
+        return  current.key;
+    }
+
+    //helper method
+    private Node min(Node current){
+        if (current.left == null){
+            return current;
+        }
+        return min(current.left);
     }
 
     @Override
     public KeyType max() {
-        return null;
+        if (isEmpty()) throw new NoSuchElementException();
+        Node current = max(root);
+        return  current.key;
+    }
+
+    //helper method
+    private Node max(Node current){
+        if (current.right == null){
+            return current;
+        }
+        return max(current.right);
     }
 
     @Override
     public KeyType floor(KeyType key) {
-        return null;
+        Node current = floor(root, key);
+        if (current == null) throw new NoSuchElementException();
+        return current.key;
+    }
+
+    // helper method
+    private Node floor(Node current, KeyType key){
+        if(current == null){
+            return null;
+        }
+        int cmp = key.compareTo(current.key);
+        if (cmp == 0){
+            return current;
+        }
+        if (cmp < 0){
+            return floor(current.left, key);
+        }
+        Node t = floor(current.right, key);
+        if (t != null){
+            return t;
+        }else{
+            return current;
+        }
     }
 
     @Override
     public KeyType ceiling(KeyType key) {
-        return null;
+        Node current = root;
+        KeyType result = null;
+
+        while (current != null) {
+            int cmp = key.compareTo(current.key);
+
+            if (cmp == 0) {
+                // We found an exact match for the key, so return it
+                return current.key;
+            } else if (cmp < 0) {
+                // The key is less than the current node's key, so move left
+                result = current.key;
+                current = current.left;
+            } else {
+                // The key is greater than the current node's key, so move right
+                current = current.right;
+            }
+        }
+
+        return result;
     }
 
     @Override
     public int rank(KeyType key) {
-        return 0;
+        return rank(key, root);
+    }
+
+    // helper method
+    private int rank (KeyType key, Node current){
+        // Return number of keys less than key in the subtree rooted at current
+        if (current == null){
+            return 0;
+        }
+        int cmp = key.compareTo(current.key);
+        if (cmp < 0){
+            return rank(key, current.left);
+        } else if (cmp > 0) {
+            return 1 + size(current.left) + rank(key, current.right);
+        } else {
+            return size(current.left);
+        }
     }
 
     @Override
     public KeyType select(int k) {
-        return null;
+        if ((k < 0) || k >= size()) throw new IllegalArgumentException();
+        Node current = select(root, k);
+        return current.key;
+    }
+
+    // helper method
+    private Node select(Node current, int k){
+        //return key containing rank k
+        if (current == null){
+            return null;
+        }
+        int t  = size(current.left);
+        if (t > k){
+            return select(current.left, k);
+        } else if (t < k){
+            return select(current.right, k-t-1);
+        } else {
+            return current;
+        }
     }
 
     @Override
     public Iterable<KeyType> keys() {
         //create a new empty queue to hold my results
-        Queue<KeyType> queue = new Queue<>();
+        Queue<KeyType> queue = new Queue<KeyType>();
 
         //start the recursion, collecting results in the queue
         inorder(root, queue);

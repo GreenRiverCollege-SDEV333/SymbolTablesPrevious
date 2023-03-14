@@ -2,6 +2,8 @@ import edu.greenriver.sdev333.BST;
 import edu.greenriver.sdev333.BinarySearchST;
 import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
+
+import javax.security.auth.kerberos.KeyTab;
 import java.util.Scanner;
 
 /**
@@ -19,7 +21,7 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new BinarySearchST<>(10);
+        SymbolTable<String, Integer> st = new BST();
 
         int i = 0;
         while (input.hasNext()) {
@@ -32,8 +34,19 @@ public class BasicTestClient {
             System.out.println(s + " " + st.get(s));
         }
 
-        System.out.println(st.size());
-        //System.out.println("Get " + st.get("A") + " Min " + ((BinarySearchST<String, Integer>) st).min() +
-        //        " Max " + ((BinarySearchST<String, Integer>) st).max());
+
+        // Binary Search Tree assignment
+        System.out.println("Binary Search Tree assignment");
+        System.out.println("Binary min: " + ((BST<String, Integer>) st).min() + " Expected: A");
+        System.out.println("Binary max: " + ((BST<String, Integer>) st).max() + " Expected: X");
+        System.out.println("Binary floor: " + ((BST<String, Integer>) st).floor("B") + " Expected: A");
+        System.out.println("Binary ceiling: " + ((BST<String, Integer>) st).ceiling("B") +" Expected: C");
+        System.out.println("Binary select: " + ((BST<String, Integer>) st).select(0) +" Expected: A");
+        System.out.println("Binary rank: " + ((BST<String, Integer>) st).rank("A") +" Expected: 0");
+        System.out.println("------------------------------------------------------------------------------------");
+
+
+
+
     }
 }
