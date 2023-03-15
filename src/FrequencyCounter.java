@@ -1,4 +1,4 @@
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -13,11 +13,11 @@ import java.io.File;
  */
 public class FrequencyCounter {
     public static final int MINLEN = 1;
-    public static final String FILENAME = "tale.txt";
+    public static final String FILENAME = "/Users/stewartlovell/Desktop/sdev333/SymbolTables/tale.txt";
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
