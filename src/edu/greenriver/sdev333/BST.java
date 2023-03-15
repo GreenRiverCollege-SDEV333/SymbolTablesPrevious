@@ -1,9 +1,8 @@
 package edu.greenriver.sdev333;
 
 /**
- * Binary Search Tree symbol table
- * Refer to p. 396-415 in Sedgewick and Wayne, Algorithms, 4th edition,
- * pages 398-399
+ * Binary Search Tree
+ * Code from to p. 396-415 in Sedgewick and Wayne, Algorithms, 4th edition,
  * @param <KeyType>
  * @param <ValueType>
  */
@@ -18,7 +17,7 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         private ValueType val;
         private Node left;
         private Node right;
-        private int N;  // number of nodes in the subtree rooted here
+        private int N;  
 
         private Node(KeyType key, ValueType val, int N) {
             this.key = key;
@@ -28,57 +27,35 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     }
 
     /**
-     * This method adds a key/value pair to the tree, after first ascertaining its
-     * correct location.  It calls the private method put(Node,KeyType,ValueType)
-     * which performs this action recursively.
      *
      * @param key
      * @param value
      */
     @Override
     public void put(KeyType key, ValueType value) {
-        // in case the tree is empty, having = allows us to save/start the tree
         root = put(root, key, value);
     }
 
-    // helper method for put, uses recursion
-    private Node put(Node current, KeyType key, ValueType val) {
-        // current is the root of the subtree we are looking at
-
-        // we are where we are supposed to be
-        if (current == null) {
-            // create a new node
+    private Node put(Node x, KeyType key, ValueType val) {
+        if (x == null) {
             return new Node(key, val, 1);
         }
 
-        int cmp = key.compareTo(current.key);
-        // cmp will be < 0 if key < current
-        // cmp = 0 if key == current
-        // cmp > 0 if key > current
+        int cmp = key.compareTo(x.key);
 
         if (cmp < 0) {
-            // go left
-            current.left = put(current.left, key, val);
+            x.left = put(x.left, key, val);
         } else if (cmp > 0) {
-            // go right
-            current.right = put(current.right, key, val);
+            x.right = put(x.right, key, val);
         } else {
-            // key already exists, replace the data (val)zs
-            current.val = val;
+            x.val = val;
         }
+        x.N = size(x.left) + size(x.right) + 1;
 
-        // update the node's N, number of nodes in subtree
-        // size of left + size of right + self
-        current.N = size(current.left) + size(current.right) + 1;
-
-        return current;
+        return x;
     }
 
     /**
-     * Returns the object for key, calls the helper method
-     * get(Node,KeyType), which works recursively to get the
-     * given KeyType.
-     *
      * @param key
      * @return
      */
@@ -90,27 +67,26 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     /*
      * recursive version of get() method
      */
-    private ValueType get(Node current, KeyType key) {
-        // author uses x instead of current
+    private ValueType get(Node x, KeyType key) {
 
-        if (current == null) {
+        if (x == null) {
             return null;
         }
 
-        int cmp = key.compareTo(current.key);
+        int cmp = key.compareTo(x.key);
 
         if (cmp < 0) {
-            return get(current.left, key);
+            return get(x.left, key);
         } else if (cmp > 0) {
-            return get(current.right, key);
+            return get(x.right, key);
         } else {
-            return current.val;
+            return x.val;
         }
 
     }
 
     /**
-     * Returns the size of the tree, calls the helper method size(Node)
+     * 
      * @return
      */
     @Override
@@ -119,11 +95,11 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     }
 
     // helper method for public int size()
-    private int size(Node current) {
-        if (current == null) {
+    private int size(Node x) {
+        if (x == null) {
             return 0;
         } else {
-            return current.N;
+            return x.N;
         }
     }
 
@@ -327,19 +303,19 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     // Helper method for keys(), recursively finds list of
     // keys inside tree
-    private void inorder(Node current, Queue<KeyType> q) {
-        if (current == null) {
+    private void inorder(Node x, Queue<KeyType> q) {
+        if (x == null) {
             // do nothing - intentionally blank
             return;
         }
 
         // left subtree
-        inorder(current.left, q);
+        inorder(x.left, q);
 
         // add self to queue
-        q.enqueue(current.key);
+        q.enqueue(x.key);
 
         // right subtree
-        inorder(current.right, q);
+        inorder(x.right, q);
     }
 }

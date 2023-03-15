@@ -62,17 +62,17 @@ public class Queue<Item> implements Iterable<Item> {
 
     private class ListIterator implements Iterator<Item> {
 
-        private Node current = first;
+        private Node x = first;
 
         @Override
         public boolean hasNext() {
-            return current != null;
+            return x != null;
         }
 
         @Override
         public Item next() {
-            Item item = current.item;
-            current = current.next;
+            Item item = x.item;
+            x = x.next;
             return item;
         }
     }
