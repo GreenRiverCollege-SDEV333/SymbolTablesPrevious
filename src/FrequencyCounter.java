@@ -1,4 +1,5 @@
 import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.BinarySearchST;
 import edu.greenriver.sdev333.SeparateChainingHashST;
 import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
@@ -20,9 +21,11 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-       // SymbolTable<String, Integer> st = new SequentialSearchST<>();   //prints 0
-        SymbolTable<String, Integer> st = new SeparateChainingHashST<>();   //prints 0
-       // SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        //SymbolTable<String, Integer> st = new SequentialSearchST<>();   //prints that 1889 but takes longer
+        //SymbolTable<String, Integer> st = new SeparateChainingHashST<>();   //prints that 1889
+        SymbolTable<String, Integer> st = new BST<>(); //prints that 1889
+//        SymbolTable<String, Integer> st = new TreeMapWrapper<>(); //prints that 1889
+       // SymbolTable<String, Integer> st = new BinarySearchST<>(100);
 
         try {
             Scanner input = new Scanner(new File(FILENAME));

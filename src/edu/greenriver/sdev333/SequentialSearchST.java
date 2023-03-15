@@ -25,13 +25,14 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
     @Override
     public void put(KeyType key, ValueType val) {
         // Search for key. Update value if found; grow table if new.
-        for (Node x = first; x != null; x = x.next){
-            if (key.equals(x.key)){
+        for (Node x = first; x != null; x = x.next) {
+            if (key.equals(x.key)) {
                 x.val = val;
                 return;                             // Search hit: update val
             }
-            first = new Node(key, val, first);      // Search miss: add new node
         }
+
+        first = new Node(key, val, first);      // Search miss: add new node
     }
 
     @Override
@@ -54,6 +55,16 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
     public Iterable<KeyType> keys() {
         //create a new empty queue to hold my results
         Queue<KeyType> queue = new Queue<>();
+
+        Node current = first;
+        //if is not empty
+        while (current != null) {
+            //added to queue
+            queue.enqueue(current.key);
+            //sends to next
+            current = current.next;
+        }
+
         return queue;
     }
 }
