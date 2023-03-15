@@ -20,8 +20,8 @@ public class FrequencyCounter {
         System.out.println("Hello world!");
 
 //        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
-//        SymbolTable<String, Integer> st = new BST<>();
-        SymbolTable<String, Integer> st = new SequentialSearchST<>();
+        SymbolTable<String, Integer> st = new BST<>();
+//        SymbolTable<String, Integer> st = new SequentialSearchST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));

@@ -1,5 +1,7 @@
 package edu.greenriver.sdev333;
 
+import java.util.NoSuchElementException;
+
 /**
  * Binary Search Tree symbol table
  * Refer to p. 396-415 in Sedgewick and Wayne, Algorithms, 4th edition
@@ -133,32 +135,144 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public KeyType min() {
-        return null;
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        Node current = min(root);
+        return current.key;
+    }
+    private Node min(Node current) {
+        if (current.left == null) {
+            return current;
+        }
+        return min(current.left);
     }
 
     @Override
     public KeyType max() {
-        return null;
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        Node current = max(root);
+        return current.key;
+    }
+    public Node max(Node current) {
+        if (current.right == null) {
+            return current;
+        }
+        return max(current.right);
     }
 
     @Override
     public KeyType floor(KeyType key) {
-        return null;
+        Node current = floor(root, key);
+        if (current == null) {
+            throw new NoSuchElementException();
+        }
+        return current.key;
+    }
+    private Node floor(Node current, KeyType key) {
+        if (current == null)  {
+            return null;
+        }
+
+        int cmp = key.compareTo(current.key);
+
+        if (cmp == 0) {
+            return current;
+        }
+        if (cmp < 0) {
+            return floor(current.left, key);
+        }
+
+        Node t = floor(current.right, key);
+
+        if (t != null) {
+            return t;
+        }
+        else {
+            return current;
+        }
     }
 
     @Override
     public KeyType ceiling(KeyType key) {
-        return null;
+        Node current = ceiling(root, key);
+        if (current == null) {
+            throw new NoSuchElementException();
+        }
+        return current.key;
+    }
+    private Node ceiling(Node current, KeyType key) {
+        if (current == null)  {
+            return null;
+        }
+
+        int cmp = key.compareTo(current.key);
+
+        if (cmp == 0) {
+            return current;
+        }
+        if (cmp < 0) {
+            return floor(current.right, key);
+        }
+
+        Node t = floor(current.left, key);
+
+        if (t != null) {
+            return t;
+        }
+        else {
+            return current;
+        }
     }
 
     @Override
     public int rank(KeyType key) {
-        return 0;
+        return rank(key, root);
+    }
+    private int rank(KeyType key, Node currrent) {
+        if (currrent == null) {
+            return 0;
+        }
+
+        int cmp = key.compareTo(currrent.key);
+        if (cmp < 0) {
+            return rank(key, currrent.left);
+        }
+        else if (cmp > 0) {
+            return 1 + size(currrent.left) + rank(key, currrent.right);
+        }
+        else {
+            return size(currrent.left);
+        }
     }
 
     @Override
     public KeyType select(int k) {
-        return null;
+        if (k < 0 || k >= size()) {
+            throw new IllegalArgumentException();
+        }
+
+        Node current = select(root, k);
+        return current.key;
+    }
+    private Node select(Node current, int k) {
+        if (current == null) {
+            return null;
+        }
+
+        int t = size(current.left);
+        if (t > k) {
+            return select(current.left, k);
+        }
+        else if (t < k) {
+            return select(current.right, k-t-1);
+        }
+        else {
+            return current;
+        }
+
     }
 
     @Override
