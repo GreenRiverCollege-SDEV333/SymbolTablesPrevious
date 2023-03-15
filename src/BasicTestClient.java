@@ -1,4 +1,5 @@
 import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.BinarySearchST;
 import edu.greenriver.sdev333.SeparateChainingHashST;
 import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
@@ -19,8 +20,10 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        //SymbolTable<String, Integer> st = new SequentialSearchST<>();   //compiles but doesn't print anything
-        SymbolTable<String, Integer> st = new SeparateChainingHashST<>(100);   //compiles but doesn't print anything
+        //SymbolTable<String, Integer> st = new SequentialSearchST<>();
+//        SymbolTable<String, Integer> st = new SeparateChainingHashST<>(100);
+        SymbolTable<String, Integer> st = new BST<>();
+//        SymbolTable<String, Integer> st = new BinarySearchST<>(100);
 //        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
 
         int i = 0;
