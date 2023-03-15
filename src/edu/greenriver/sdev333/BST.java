@@ -139,6 +139,23 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        //empty queue to hold my result
+
+        Queue<KeyType> queue = new Queue<>();
+        //start recursion
+        inOrder(root, queue);
+        //when done return the queue
+        return queue;
+    }
+
+    private void inOrder(Node current, Queue<KeyType> q){
+        if(current == null){
+            //do nothing - intentionally blank
+            return;
+        }
+
+        inOrder(current.left, q);
+        q.enqueue(current.key);
+        inOrder(current.right, q);
     }
 }

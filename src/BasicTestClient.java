@@ -20,12 +20,14 @@ public class BasicTestClient {
         SymbolTable<String, Integer> st = new TreeMapWrapper<>();
         SequentialSearchST<String, Integer> aat = new SequentialSearchST<>();
         BST<String, Integer> at =new BST<>();
+        SeparateChainingHashST<String, Integer> t =new SeparateChainingHashST<>();
         int i = 0;
         while (input.hasNext()) {
             String key = input.next();
             st.put(key, i);
             aat.put(key, i);
             at.put(key, i);
+            t.put(key, i);
             i++;
         }
         System.out.println("TreeMapWrapper");
@@ -39,6 +41,9 @@ public class BasicTestClient {
         System.out.println("BST");
         for (String s : at.keys()) {
             System.out.println(s + " " + at.get(s));
+        }System.out.println("SeparateChainingHashST");
+        for (String s : t.keys()) {
+            System.out.println(s + " " + t.get(s));
         }
     }
 }
