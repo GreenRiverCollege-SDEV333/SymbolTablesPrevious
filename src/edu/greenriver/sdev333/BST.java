@@ -322,10 +322,13 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 //        public KeyType next() {
 //            //set current to top of the stack
 //            current = stack.pop();
+
 //            //set a variable for current key to be returned later
 //            KeyType key = (KeyType) current.key;
+
 //            //current.right night null then move to current.right
 //            //when current is not null push to stack then move left
+
 //            if (current.right != null) {
 //                current = current.right;
 //                while (current != null) {

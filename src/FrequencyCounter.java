@@ -17,7 +17,7 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String,Integer> st = new BST<>();
+        SymbolTable<String,Integer> st = new SeparateChainingHashST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
