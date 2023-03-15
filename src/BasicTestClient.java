@@ -1,8 +1,7 @@
-import edu.greenriver.sdev333.BinarySearchST;
-import edu.greenriver.sdev333.SequentialSearchST;
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
+
 import java.util.Scanner;
-import edu.greenriver.sdev333.BST;
+
 /**
  * Basic symbol table test client
  * p. 370 of Sedgewick and Wayne
@@ -30,7 +29,7 @@ public class BasicTestClient {
          */
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new BinarySearchST<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>(100);
 
         int i = 0;
         while (input.hasNext()) {

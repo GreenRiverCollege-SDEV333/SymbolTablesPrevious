@@ -9,6 +9,9 @@ package edu.greenriver.sdev333;
  * @param <ValueType>
  */
 public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyType, ValueType> {
+
+
+
     private Node first;
     private int size = 0;
     private class Node
