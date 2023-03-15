@@ -1,5 +1,6 @@
 import edu.greenriver.sdev333.BST;
 import edu.greenriver.sdev333.OrderedSymbolTable;
+import edu.greenriver.sdev333.SeparateChainingHashST;
 import edu.greenriver.sdev333.SymbolTable;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        OrderedSymbolTable<String, Integer> st = new BST<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>();
 
         int i = 0;
         while (input.hasNext()) {
@@ -32,11 +33,11 @@ public class BasicTestClient {
         }
 
         //The basic test client is extended to test the min, max, floor, ceiling, select, rank methods (delete methods not required)
-        System.out.println(st.min());
+        /*System.out.println(st.min());
         System.out.println(st.max());
         System.out.println(st.floor("B"));
         System.out.println(st.ceiling("C"));
         System.out.println(st.select(1));
-        System.out.println(st.rank("F"));
+        System.out.println(st.rank("F"));*/
     }
 }

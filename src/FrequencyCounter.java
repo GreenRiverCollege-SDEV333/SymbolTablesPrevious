@@ -1,7 +1,4 @@
-import edu.greenriver.sdev333.BST;
-import edu.greenriver.sdev333.OrderedSymbolTable;
-import edu.greenriver.sdev333.SequentialSearchST;
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -20,7 +17,7 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        OrderedSymbolTable<String, Integer> st = new BST<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
