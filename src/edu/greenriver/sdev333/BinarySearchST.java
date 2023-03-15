@@ -7,19 +7,48 @@ package edu.greenriver.sdev333;
  * @param <ValueType>
  */
 public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> implements OrderedSymbolTable<KeyType, ValueType> {
+
+    private KeyType[] keys;
+    private ValueType[] vals;
+    private int N;
+
+    public BinarySearchST(int capacity) {
+        keys = (KeyType[])new Comparable[capacity];
+        vals = (ValueType[])new Object[capacity];
+    }
+
     @Override
     public void put(KeyType key, ValueType value) {
-
+        int i = rank(key);
+        if (i < N && keys[i].compareTo(key) == 0) {
+            vals[i] = value;
+            return;
+        }
+        for (int j = N; j > i; j--) {
+            keys[j] = keys[j-1];
+            vals[j] = vals[j-1];
+        }
+        keys[i] = key;
+        vals[i] = value;
+        N++;                // Okay here, as if simply replacing value, function has already returned
     }
 
     @Override
     public ValueType get(KeyType key) {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        int i = rank(key);
+        if (i<N && keys[i].compareTo(key) == 0) {
+            return vals[i];
+        } else {
+            return null;
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        return N;
     }
 
     @Override
@@ -32,11 +61,21 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
         return null;
     }
 
+    /**
+     * Return the largest key that is less than or equal to the given key
+     * @param key
+     * @return
+     */
     @Override
     public KeyType floor(KeyType key) {
         return null;
     }
 
+    /**
+     * Return the smallest key that is greater than or equal to the given key
+     * @param key
+     * @return
+     */
     @Override
     public KeyType ceiling(KeyType key) {
         return null;
@@ -44,7 +83,21 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
 
     @Override
     public int rank(KeyType key) {
-        return 0;
+
+        int lo = 0;
+        int hi = N-1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            int cmp = key.compareTo(keys[mid]);
+            if (cmp < 0) {
+                hi = mid - 1;
+            } else if (cmp > 0) {
+                lo = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return lo;
     }
 
     @Override
@@ -52,8 +105,18 @@ public class BinarySearchST<KeyType extends Comparable<KeyType>, ValueType> impl
         return null;
     }
 
+    /**
+     * Returns a queue of keys for this data structure.
+     * @return
+     */
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        Queue<KeyType> queue = new Queue<>();
+
+        for (int i = 0; i < N; i++) {
+            queue.enqueue(keys[i]);
+        }
+
+        return queue;
     }
 }
