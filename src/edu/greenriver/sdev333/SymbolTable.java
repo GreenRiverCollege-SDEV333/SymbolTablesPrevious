@@ -14,7 +14,7 @@ public interface SymbolTable <KeyType, ValueType> {
         put(key, null);
     }
     default boolean contains(KeyType key) {
-        return get(key) == null;
+        return get(key) != null;
     }
     default boolean isEmpty() {
         return size() == 0;
