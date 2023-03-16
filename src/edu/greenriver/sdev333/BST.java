@@ -28,97 +28,130 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
     }
     @Override
     public void put(KeyType key, ValueType value) {
-
+        root = put(root, key, value);
     }
 
-    @Override
-    /*public ValueType get(KeyType key) {
-        //given a key, find the value
-        //set root to be current, so we have a starting point
-        Node current = root;
-        //keep going down the tree as long as not null
-        while (current != null) {
-            ///to choose whether to go left or right use the compareTo method returns neg, zero, or pos #
-            //keys are not primitive they are class objects so use the .compareTo
-            int comp = key.compareTo(current.key);
-            //so if the comparison is less than we go left and so on
-            if (comp < 0) {
-                current = current.left;
-            }
-            else if (comp > 0) {
-                current = current.right;
-            }
-            else{
-                return current.val;
-            }
-        }//end of while loop
-        //if not there
-        return null;
-    }
-
-     */
-
-    public ValueType get(KeyType key) {
-        return get(root, key);
-    }
-
-    //recursive way
-    //helper method
-    private ValueType get(Node current, KeyType key) {
+    private Node put(Node current, KeyType key, ValueType value) {
         if (current == null) {
-            return null;
+            return new Node(key, value, 1);
         }
-
         int comp = key.compareTo(current.key);
-
         if (comp < 0) {
-            return get(current.left, key);
+            current.left = put(current.left, key, value);
         }
         else if (comp > 0) {
-            return get(current.right, key);
+            current.right = put(current.right, key, value);
         }
         else {
-            return current.val;
+            current.val = value;
         }
+        current.N = 1 + size(current.left) + size(current.right);
+        return current;
     }
-
-    @Override
-    public int size() {
-        if (root == null) {
-            return 0;
-        }
-        else {
-            return root.N;
-        }
-    }
-
-    //helper method for being flexible looking at subtree size given the current spot
-
 
     @Override
     public KeyType min() {
-        return null;
+        if (root == null) {
+            return null;
+        }
+        Node current = root;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current.key;
     }
 
     @Override
     public KeyType max() {
-        return null;
+        if (root == null) {
+            return null;
+        }
+        Node current = root;
+        while (current.right != null) {
+            current = current.right;
+        }
+        return current.key;
     }
 
     @Override
     public KeyType floor(KeyType key) {
-        return null;
+        Node x = floor(root, key);
+        if (x == null) {
+            return null;
+        }
+        return x.key;
+    }
+
+    private Node floor(Node x, KeyType key) {
+        if (x == null) {
+            return null;
+        }
+        int comp = key.compareTo(x.key);
+        if (comp == 0) {
+            return x;
+        }
+        if (comp < 0) {
+            return floor(x.left, key);
+        }
+        Node t = floor(x.right, key);
+        if (t != null) {
+            return t;
+        }
+        else {
+            return x;
+        }
     }
 
     @Override
     public KeyType ceiling(KeyType key) {
-        return null;
+        Node x = ceiling(root, key);
+        if (x == null) {
+            return null;
+        }
+        return x.key;
+    }
+
+    private Node ceiling(Node x, KeyType key) {
+        if (x == null) {
+            return null;
+        }
+        int comp = key.compareTo(x.key);
+        if (comp == 0) {
+            return x;
+        }
+        if (comp > 0) {
+            return ceiling(x.right, key);
+        }
+        Node t = ceiling(x.left, key);
+        if (t != null) {
+            return t;
+        }
+        else {
+            return x;
+        }
     }
 
     @Override
     public int rank(KeyType key) {
-        return 0;
+        return rank(key, root);
     }
+
+    private int rank(KeyType key, Node x) {
+        if (x == null) {
+            return 0;
+        }
+        int comp = key.compareTo(x.key);
+        if (comp < 0) {
+            return rank(key, x.left);
+        }
+        else if (comp > 0) {
+            return 1 + size(x.left) + rank(key, x.right);
+        }
+        else {
+            return size(x.left);
+        }
+    }
+
 
     @Override
     public KeyType select(int k) {
