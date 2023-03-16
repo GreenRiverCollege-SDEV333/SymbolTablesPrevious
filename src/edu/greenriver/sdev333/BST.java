@@ -168,14 +168,47 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return null;
     }
 
+    private int rank(KeyType key, Node current) {
+        // return numbers of keys less tha nthe key in the subtree rooted at current
+        if(current == null) {
+            return 0;
+        }
+        int cmp = key.compareTo(current.key);
+        if (cmp < 0) {
+            return rank(key,current.left);
+        } else if (cmp > 0) {
+            return 1 + size(current.left) + rank (key, current.right);
+        } else {
+            return size(current.left);
+        }
+    }
     @Override
     public int rank(KeyType key) {
-        return 0;
+        return rank(key,root);
     }
 
+    private Node select(Node current, int k){
+        // return node containg the key of  rank k
+        if (current == null) {
+            return null;
+        }
+        int t = size(current.left);
+        if (t > k) {
+            return select(current.left, k);
+        } else if (t < k) {
+            return select(current.right,k-t-1);
+        }
+        else {
+            return current;
+        }
+    }
     @Override
     public KeyType select(int k) {
-        return null;
+        if(k < 0 || k >=size()) {
+            throw new IllegalArgumentException();
+        }
+        Node current = select(root, int k);
+        return current.key;
     }
 
     @Override
