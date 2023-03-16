@@ -1,5 +1,9 @@
 package edu.greenriver.sdev333;
 // page 389
+
+import javax.xml.crypto.dsig.keyinfo.KeyValue;
+import java.util.NoSuchElementException;
+
 /**
  * Binary Search Tree symbol table
  * Refer to p. 396-415 in Sedgewick and Wayne, Algorithms, 4th edition
@@ -110,9 +114,21 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
         return current.N;
     }
+
+    private Node min(Node current) {
+        if (current.left == current.right) {
+            return current;
+        }
+        return min(current.left);
+    }
     @Override
     public KeyType min() {
-        return null;
+        if(isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        Node current = min(root);
+        return current.key;
     }
 
     @Override
@@ -120,9 +136,31 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         return null;
     }
 
+    private Node floor(Node current, KeyType key) {
+        if (current == null) {
+            return null;
+        }
+        int cmp = key.compareTo(current.key);
+        if(cmp == 0) {
+            return current;
+        }
+        if(cmp  < 0) {
+            return floor(current.left, key);
+        }
+        Node t = floor(current.right, key);
+        if (t != null) {
+            return t;
+        } else {
+            return current;
+        }
+    }
     @Override
     public KeyType floor(KeyType key) {
-        return null;
+        Node current = floor(root,key);
+        if (current == null) {
+            throw new NoSuchElementException();
+        }
+        return current.key;
     }
 
     @Override
