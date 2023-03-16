@@ -31,6 +31,16 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         root = put(root, key, value);
     }
 
+    @Override
+    public ValueType get(KeyType key) {
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
     private Node put(Node current, KeyType key, ValueType value) {
         if (current == null) {
             return new Node(key, value, 1);
@@ -150,6 +160,10 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         else {
             return size(x.left);
         }
+    }
+
+    private int size(Node left) {
+        return 0;
     }
 
 
