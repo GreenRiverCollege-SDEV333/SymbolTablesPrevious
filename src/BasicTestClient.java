@@ -1,4 +1,5 @@
-import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.*;
+
 import java.util.Scanner;
 
 /**
@@ -13,10 +14,22 @@ public class BasicTestClient {
         String inputString = "S E A R C H E X A M P L E";
 
         Scanner input = new Scanner(inputString);
-
+        /**
+         *  put(S,0)
+         *  put(E,1)
+         *  put(A,2)
+         *  put(R,3)
+         *  put(C,4)
+         *  put(H,5)
+         *  put(E,6)
+         *  put(X,7)
+         *  put(A,8)
+         *  put(M,9)
+         *
+         */
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        SymbolTable<String, Integer> st = new SeparateChainingHashST<>(100);
 
         int i = 0;
         while (input.hasNext()) {

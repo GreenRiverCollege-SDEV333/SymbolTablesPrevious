@@ -1,5 +1,7 @@
+import edu.greenriver.sdev333.BinarySearchST;
+import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
-
+import edu.greenriver.sdev333.BST;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.File;
@@ -17,7 +19,8 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new TreeMapWrapper<>();
+        // BinaraySearchST I didn't create resize method, is that ok?
+        SymbolTable<String, Integer> st = new BinarySearchST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
