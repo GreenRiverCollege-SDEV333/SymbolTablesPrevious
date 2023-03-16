@@ -16,7 +16,7 @@ public class BasicTestClient {
 
         // You can replace the implementation with any class that implements
         // SymbolTable interface
-        SymbolTable<String, Integer> st = new SeparateChainingHashST<>(50);
+        SymbolTable<String, Integer> st = new RedBlackBST<>();
 
         int i = 0;
         while (input.hasNext()) {
