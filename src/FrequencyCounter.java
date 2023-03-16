@@ -1,3 +1,4 @@
+import edu.greenriver.sdev333.SeparateChainingHashST;
 import edu.greenriver.sdev333.SymbolTable;
 import edu.greenriver.sdev333.BST;
 import edu.greenriver.sdev333.SequentialSearchST;
@@ -19,9 +20,9 @@ public class FrequencyCounter {
     // characters long - the minimum length
     public static final String FILENAME = "tale.txt"; // changeable file name
     public static void main(String[] args) {
-        System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new SequentialSearchST<>(); // this is changeable
+        SymbolTable<String, Integer> st = new BST<>(); // test BST
+        SymbolTable<String, Integer> st1 = new SeparateChainingHashST<>(); // test SeparateChainingHash
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
@@ -49,6 +50,7 @@ public class FrequencyCounter {
         }
 
         // Find a key with the highest frequency count
+        System.out.println("Test BST (frequency counter) ------ ");
         String maxWord = "";
         int maxCount = 0;
 
@@ -61,5 +63,47 @@ public class FrequencyCounter {
         }
 
         System.out.println(maxWord + " " + maxCount);
+
+
+
+        try {
+            Scanner input = new Scanner(new File(FILENAME));
+            while (input.hasNext()) {
+                String word = input.next();
+
+                // ignore short keys
+                if (word.length() < MINLEN) {
+                    continue;
+                }
+
+                if (!st.contains(word)) {
+                    // if the word is not in the symbol table
+                    // put it in with a value of 1
+                    st1.put(word, 1);
+                }
+                else {
+                    int count = st.get(word);   // get existing word count
+                    count++;                    // increment/update the count
+                    st1.put(word, count);        // put updated word count
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Find a key with the highest frequency count
+        System.out.println("\nTest SeparateChainingHashST (frequency counter) ------ ");
+        String maxWord1 = "";
+        int maxCount1 = 0;
+
+        for (String currentWord : st1.keys()) {
+            int currentCount = st.get(currentWord);
+            if (currentCount > maxCount1) {
+                maxWord1 = currentWord;
+                maxCount1 = currentCount;
+            }
+        }
+
+        System.out.println(maxWord1 + " " + maxCount1);
     }
 }

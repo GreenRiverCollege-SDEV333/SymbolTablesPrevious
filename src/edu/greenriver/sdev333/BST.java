@@ -117,7 +117,6 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     }
 
-
     // helper method
     private ValueType get (Node current, KeyType key) {
         // author uses x instead of current
@@ -154,6 +153,7 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
         // call helper method and return at the root
         return size(root);
     }
+    // helper method
     private int size(Node current) {
         if (current == null ) {
             return 0;
@@ -164,34 +164,88 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     }
 
+
     @Override
     public KeyType min() {
-        return null;
+        return min(root).key;
+    }
+    // helper method
+    private Node min(Node x) {
+        if (x.left == null) return x;
+        return min(x.left);
     }
 
     @Override
     public KeyType max() {
-        return null;
+        return max(root).key;
+    }
+    // helper method
+    private Node max(Node x) {
+        if (x.right == null) return x;
+        return max(x.right);
     }
 
     @Override
     public KeyType floor(KeyType key) {
-        return null;
+        Node x = floor (root, key);
+        if (x == null) return null;
+        return x.key;
+    }
+    // helper method
+    private Node floor(Node x, KeyType key) {
+        if (x == null) return null;
+        int cmp = key.compareTo(x.key);
+        if (cmp == 0) return x;
+        if (cmp < 0)  return floor(x.left, key);
+        Node t = floor(x.right, key);
+        if (t != null) return t;
+        else           return x;
     }
 
     @Override
     public KeyType ceiling(KeyType key) {
-        return null;
+        Node x = ceiling (root, key);
+        if (x == null) return null;
+        return x.key;
+    }
+    // helper method
+    private Node ceiling(Node x, KeyType key) {
+        if (x == null) return null;
+        int cmp = key.compareTo(x.key);
+        if (cmp == 0) return x;
+        if (cmp > 0)  return ceiling(x.right, key);
+        Node t = ceiling(x.left, key);
+        if (t != null) return t;
+        else           return x;
     }
 
     @Override
     public int rank(KeyType key) {
-        return 0;
+        return rank(key, root);
     }
+    // helper method
+    private int rank(KeyType key, Node x)
+    {  // Return number of keys less than x.key in the subtree rooted at x.
+        if (x == null) return 0;
+        int cmp = key.compareTo(x.key);
+        if      (cmp < 0) return rank(key, x.left);
+        else if (cmp > 0) return 1 + size(x.left) + rank(key, x.right);
+        else              return size(x.left);
+    }
+
 
     @Override
     public KeyType select(int k) {
-        return null;
+        return select(root, k).key;
+    }
+    // helper method
+    private Node select(Node x, int k)
+    {   // Return Node containing key of rank k.
+        if (x == null) return null;
+        int t = size(x.left);
+        if      (t > k) return select(x.left,  k);
+        else if (t < k) return select(x.right, k-t-1);
+        else            return x;
     }
 
     // return key in order
