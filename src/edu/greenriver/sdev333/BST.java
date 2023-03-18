@@ -161,15 +161,28 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public KeyType min() {
-        if (isEmpty()) throw new NoSuchElementException();
+        /*if (isEmpty()) throw new NoSuchElementException();
         //Node current = min(root);
         //return current.key;
-        return null;
+        return null;*/
+        //minimum will go left
+        Node n = root;
+        while (n.left != null) {
+            n = n.left;
+        }
+
+        return n.key;
     }
 
+    //highest key returned, go right
     @Override
     public KeyType max() {
-        return null;
+        Node n = root;
+        while (n.right != null) {
+            n = n.right;
+        }
+
+        return n.key;
     }
 
     @Override
@@ -179,17 +192,109 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
             throw new NoSuchElementException();
         }
         return current.key;*/
-        return null;
+        Node current = floor(root, key);
+
+        if (current == null) {
+            return null;
+        }
+
+        return current.key;
     }
 
+    /**
+     * Helper method for floor
+     * will recursively for the floor that is less or equal to the key that is given
+     * @param current
+     * @param key
+     * @return
+     */
+    private Node floor(Node current, KeyType key) {
+
+        if (current == null)
+            return null;
+        int cmp = key.compareTo(current.key);
+
+        if (cmp == 0)
+            return current;
+
+        if (cmp < 0)
+            return floor(current.left, key);
+
+        Node t = floor(current.right,key);
+
+        if (t != null)
+            return t;
+        else
+            return current;
+    }
+
+    /**
+     * will return the key node if it is present
+     * if node is not present the highest node will be returned
+     * @param key
+     * @return
+     */
     @Override
     public KeyType ceiling(KeyType key) {
-        return null;
+        Node x = ceiling(root, key);
+
+        if (x == null) {
+            return null;
+        }
+
+        return x.key;
+    }
+
+    // helper method for cieling
+
+    /**
+     * looks for the cieling
+     *
+     * @param current
+     * @param key
+     * @return
+     */
+    private Node ceiling(Node current, KeyType key) {
+        if (current == null)
+            return null;
+        int cmp = key.compareTo(current.key);
+        if (cmp == 0)
+            return current;
+        if (cmp > 0)
+            return ceiling(current.right, key);
+        Node t = ceiling(current.left,key);
+        if (t != null)
+            return t;
+        else
+            return current;
     }
 
     @Override
     public int rank(KeyType key) {
-        return 0;
+        return rank(root, key);
+    }
+
+    // helper method for rank
+
+    /**
+     *
+     * @param n
+     * @param key
+     * @return
+     */
+    private int rank(Node n, KeyType key) {
+        if (n == null)
+            return 0;
+
+        int compare = key.compareTo(n.key);
+
+        if (compare < 0)
+            return rank(n.left, key);
+
+        if (compare > 0)
+            return 1 + size(n.left) + rank(n.right, key);
+        else
+            return size(n.left);
     }
 
     @Override
