@@ -7,6 +7,23 @@ package edu.greenriver.sdev333;
  * @param <ValueType>
  */
 public class BST<KeyType extends Comparable<KeyType>, ValueType> implements OrderedSymbolTable<KeyType, ValueType> {
+
+    private Node root;
+
+    private class Node {
+        private KeyType key;
+        private ValueType val;
+        private Node left;
+        private Node right;
+        private int N; // number of nodes in the subtree rooted here
+
+        public Node(KeyType key, ValueType val, int N) {
+            this.key = key;
+            this.val = val;
+            this.N = N;
+        }
+    }
+
     @Override
     public void put(KeyType key, ValueType value) {
 
@@ -14,12 +31,54 @@ public class BST<KeyType extends Comparable<KeyType>, ValueType> implements Orde
 
     @Override
     public ValueType get(KeyType key) {
+        // someone gives me a key, I want to find the value that goes with that key
+        Node current = root;
+        while (current != null) {
+            int cmp = key.compareTo(current.key);
+                // compareTo returns neg, zero, pos
+            if (cmp < 0) {
+                current = current.left;
+            }
+            else if (cmp > 0) {
+                current = current.right;
+            }
+            else {
+                return current.val;
+            }
+        }
         return null;
+    }
+
+    private ValueType get(Node current, KeyType key) {
+        if (current == null) {
+            return null;
+        }
+
+        int cmp = key.compareTo(current.key);
+
+        if (cmp < 0) {
+            return get(current.left, key);
+        }
+        else if (cmp > 0) {
+            return get(current.right, key);
+        }
+        else {
+            return current.val;
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        return size(root);
+    }
+
+    private int size(Node current) {
+        if (current == null){
+            return 0;
+        }
+        else {
+            return current.N;
+        }
     }
 
     @Override
