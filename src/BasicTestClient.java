@@ -23,7 +23,7 @@ public class BasicTestClient {
         //SymbolTable<String, Integer> st = new TreeMapWrapper<>();
         //SymbolTable<String, Integer> st = new SeparateChainingHashST<>(100);
         //SymbolTable<String, Integer> st = new SequentialSearchST<>();
-        OrderedSymbolTable<String, Integer> st = new BST<>();
+        SymbolTable<String, Integer> st = new RedBlackBST<>();
 
         int i = 0;
         while (input.hasNext()) {

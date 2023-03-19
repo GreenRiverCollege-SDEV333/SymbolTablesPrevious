@@ -23,7 +23,7 @@ public class FrequencyCounter {
          //SymbolTable<String, Integer> st = new TreeMapWrapper<>();
         //SymbolTable<String, Integer> st = new BinarySearchST<>(500000);
         //SymbolTable<String, Integer> st = new SequentialSearchST<>();   // Works - slow
-        SymbolTable<String, Integer> st = new BST<>();  
+        SymbolTable<String, Integer> st = new RedBlackBST<>();  
 
         try {
             Scanner input = new Scanner(new File(FILENAME));
