@@ -1,3 +1,5 @@
+import edu.greenriver.sdev333.BST;
+import edu.greenriver.sdev333.OrderedSymbolTable;
 import edu.greenriver.sdev333.SymbolTable;
 import java.util.Scanner;
 
