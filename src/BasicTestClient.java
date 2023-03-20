@@ -1,5 +1,7 @@
 import edu.greenriver.sdev333.SequentialSearchST;
 import edu.greenriver.sdev333.SymbolTable;
+import edu.greenriver.sdev333.SeparateChainingHashST;
+
 import java.util.Scanner;
 
 /**
