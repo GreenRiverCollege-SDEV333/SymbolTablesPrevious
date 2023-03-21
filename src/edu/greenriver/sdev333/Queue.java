@@ -2,16 +2,26 @@ package edu.greenriver.sdev333;
 
 import java.util.Iterator;
 
+/**
+ * FIFO queue, page 151 of the red book
+ */
 public class Queue<ItemType> implements Iterable<ItemType> {
-    // FIFO Queue page 151
-    private class Node{
-        ItemType data;
-        Node next;
+    // private helper node class:
+    private class Node {
+        private ItemType data;
+        private Node next;
     }
 
+    // fields:
     private Node first;
     private Node last;
     private int size;
+
+    public Queue() {
+        first = null;
+        last = null;
+        size = 0;
+    }
 
     public boolean isEmpty() {
         return first == null;
@@ -28,8 +38,9 @@ public class Queue<ItemType> implements Iterable<ItemType> {
         last.next = null;
 
         if (isEmpty()) {
-            last = null;
-        } else {
+            first = last;
+        }
+        else {
             oldlast.next = last;
         }
 
@@ -46,14 +57,20 @@ public class Queue<ItemType> implements Iterable<ItemType> {
         return item;
     }
 
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @Override
     public Iterator<ItemType> iterator() {
-        return null;
+        return new LinkedListIterator();
     }
 
-    private class ListIterator implements Iterator<ItemType> {
+    private class LinkedListIterator implements Iterator<ItemType> {
         private Node current;
 
-        public ListIterator() {
+        public LinkedListIterator() {
             current = first;
         }
 

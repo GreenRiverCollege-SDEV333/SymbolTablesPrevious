@@ -51,6 +51,10 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
 
     @Override
     public Iterable<KeyType> keys() {
-        return null;
+        Queue<KeyType> collector = new Queue<>();
+        for (Node x = first; x != null; x = x.next) {
+            collector.enqueue(x.key);
+        }
+        return collector;
     }
 }
