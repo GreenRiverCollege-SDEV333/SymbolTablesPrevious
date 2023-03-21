@@ -1,5 +1,4 @@
 import edu.greenriver.sdev333.*;
-import edu.greenriver.sdev333.SymbolTable;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -18,7 +17,7 @@ public class FrequencyCounter {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SymbolTable<String, Integer> st = new SeparateChainingHashST<>(1000);
+        SymbolTable<String, Integer> st = new RedBlackBST<>();
 
         try {
             Scanner input = new Scanner(new File(FILENAME));

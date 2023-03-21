@@ -22,11 +22,13 @@ public class BasicTestClient {
         // SymbolTable interface
         SymbolTable<String, Integer> scHashST = new SeparateChainingHashST<>(100);
         SymbolTable<String, Integer> st = new BST<>();
+        SymbolTable<String, Integer> RedBlackTree = new RedBlackBST<>();
         int i = 0;
         while (input.hasNext()) {
             String key = input.next();
             st.put(key, i);
             scHashST.put(key, i);
+            RedBlackTree.put(key, i);
             i++;
         }
 
@@ -57,6 +59,22 @@ public class BasicTestClient {
         System.out.print("Keys() iterator method test: ");
         while(itr.hasNext()) {
             String element = (String) itr.next();
+            System.out.print(element + " ");
+        }
+        System.out.println("\n------------------------------------------------------------------------------------");
+
+        //RedBlackBST - get, put, keys, size, contains
+        System.out.println("Balance Search Tree assignment");
+        System.out.println("Get A is " + RedBlackTree.get("A"));
+        System.out.println("Put already done below the create new hash object!");
+        System.out.println("Size of scHashST is " + RedBlackTree.size());
+        System.out.println("A contained in scHashST: " + RedBlackTree.contains("A"));
+
+        Iterator itrRB = scHashST.keys().iterator();
+
+        System.out.print("Keys() iterator method test: ");
+        while(itrRB.hasNext()) {
+            String element = (String) itrRB.next();
             System.out.print(element + " ");
         }
     }
