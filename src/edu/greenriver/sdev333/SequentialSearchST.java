@@ -1,7 +1,5 @@
 package edu.greenriver.sdev333;
 
-import java.security.Key;
-
 /**
  * Sequential search (unordered linked list implementation) of Symbol Table
  * Refer to p. 374-377 in Sedgewick and Wayne, Algorithms, 4th edition
@@ -27,8 +25,8 @@ public class SequentialSearchST <KeyType, ValueType> implements SymbolTable<KeyT
                 x.val = val;
                 return;
             }
-            first = new Node(key, val, first);
         }
+        first = new Node(key, val, first);
     }
 
     @Override
